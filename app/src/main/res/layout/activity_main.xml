@@ -9,13 +9,15 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    tools:context="com.group.textgame.MainActivity">
+    android:background="@color/black"
+    tools:context="com.group.textgame.UIController">
 
     <TextView
         android:id="@+id/hello_world"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/test1"
+        android:textColor="@color/white"
         android:textSize="24sp" />
 
     <Button
@@ -24,5 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
         android:onClick="changeText" />
     </LinearLayout>
