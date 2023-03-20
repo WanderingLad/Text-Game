@@ -1,5 +1,7 @@
 package com.group.textgame.repo;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.*;
 import com.group.textgame.model.Rooms;
 import java.util.List;
@@ -7,17 +9,29 @@ import java.util.List;
 @Dao
 public interface RoomsDao {
     @Query("SELECT * FROM Rooms WHERE id = :id")
-    Rooms getRooms(long id);
+    Rooms getRoom(long id);
 
-    @Query("SELECT * FROM Rooms ORDER BY name COLLATE NOCASE")
+    @Query("SELECT * FROM Rooms ORDER BY id COLLATE NOCASE")
     List<Rooms> getRooms();
+
+    @Query("SELECT north FROM Rooms WHERE id = :id")
+    long getNorthRoom(long id);
+
+    @Query("SELECT south FROM Rooms WHERE id = :id")
+    long getSouthRoom(long id);
+
+    @Query("SELECT east FROM Rooms WHERE id = :id")
+    long getEastRoom(long id);
+
+    @Query("SELECT west FROM Rooms WHERE id = :id")
+    long getWestRoom(long id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long addRoom(Rooms rooms);
 
     @Update
-    void updateRoom(Rooms rooms);
+    void updateRoom(Rooms room);
 
     @Delete
-    void deleteRooms(Rooms rooms);
+    void deleteRoom(Rooms room);
 }

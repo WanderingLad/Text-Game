@@ -4,5 +4,8 @@ import androidx.room.Database;
 import androidx.room.RoomDatabase;
 import com.group.textgame.model.Rooms;
 
-public class RoomsDatabase {
+@Database(entities = {Rooms.class}, version = 1)
+public abstract class RoomsDatabase extends RoomDatabase {
+
+    public abstract RoomsDao roomsDao();
 }

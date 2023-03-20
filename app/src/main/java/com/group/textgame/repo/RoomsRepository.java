@@ -1,100 +1,75 @@
 package com.group.textgame.repo;
 
 import android.content.Context;
+import android.util.Log;
+
 import androidx.room.Room;
 import com.group.textgame.model.Rooms;
 import java.util.List;
 
 public class RoomsRepository {
 
-    private static StudyRepository mStudyRepo;
-    private final SubjectDao mSubjectDao;
-    private final QuestionDao mQuestionDao;
+    private static RoomsRepository roomsRepo;
+    private final RoomsDao roomsDao;
 
-    public static StudyRepository getInstance(Context context) {
-        if (mStudyRepo == null) {
-            mStudyRepo = new StudyRepository(context);
+    private Rooms activeRoom;
+
+    public static RoomsRepository getInstance(Context context) {
+        if (roomsRepo == null) {
+            roomsRepo = new RoomsRepository(context);
         }
-        return mStudyRepo;
+        return roomsRepo;
     }
 
-    private StudyRepository(Context context) {
-        StudyDatabase database = Room.databaseBuilder(context, StudyDatabase.class, "study.db")
+    private RoomsRepository(Context context) {
+      RoomsDatabase database = Room.databaseBuilder(context, RoomsDatabase.class, "rooms.db")
                 .allowMainThreadQueries()
                 .build();
 
-        mSubjectDao = database.subjectDao();
-        mQuestionDao = database.questionDao();
+        roomsDao = database.roomsDao();
 
-        if (mSubjectDao.getSubjects().isEmpty()) {
+        if (roomsDao.getRooms().isEmpty()) {
             addStarterData();
         }
+
+        activeRoom = roomsDao.getRoom(1);
+
+        activeRoom.setNorthRoom(2);
+        activeRoom.setSouthRoom(3);
+        activeRoom.setEastRoom(4);
+        activeRoom.setWestRoom(5);
+
+        roomsDao.updateRoom(activeRoom);
     }
 
     private void addStarterData() {
-        Subject subject = new Subject("Math");
-        long subjectId = mSubjectDao.addSubject(subject);
+        Rooms room = new Rooms("Room");
+        Rooms room2 = new Rooms("Room 2");
+        Rooms room3 = new Rooms("Room 3");
+        Rooms room4 = new Rooms("Room 4");
+        Rooms room5 = new Rooms("Room 5");
 
-        Question question = new Question();
-        question.setText("What is 2 + 3?");
-        question.setAnswer("2 + 3 = 5");
-        question.setSubjectId(subjectId);
-        mQuestionDao.addQuestion(question);
-
-        question = new Question();
-        question.setText("What is pi?");
-        question.setAnswer("The ratio of a circle's circumference to its diameter.");
-        question.setSubjectId(subjectId);
-        mQuestionDao.addQuestion(question);
-
-        subject = new Subject("History");
-        subjectId = mSubjectDao.addSubject(subject);
-
-        question = new Question();
-        question.setText("On what date was the U.S. Declaration of Independence adopted?");
-        question.setAnswer("July 4, 1776");
-        question.setSubjectId(subjectId);
-        mQuestionDao.addQuestion(question);
-
-        subject = new Subject("Computing");
-        mSubjectDao.addSubject(subject);
+        roomsDao.addRoom(room);
+        roomsDao.addRoom(room2);
+        roomsDao.addRoom(room3);
+        roomsDao.addRoom(room4);
+        roomsDao.addRoom(room5);
     }
 
-    public void addSubject(Subject subject) {
-        long subjectId = mSubjectDao.addSubject(subject);
-        subject.setId(subjectId);
+    public void addRoom(Rooms room) {
+        long roomId = roomsDao.addRoom(room);
+        room.setID(roomId);
     }
 
-    public Subject getSubject(long subjectId) {
-        return mSubjectDao.getSubject(subjectId);
+    public Rooms getRoom(long roomId) {
+        return roomsDao.getRoom(roomId);
     }
 
-    public List<Subject> getSubjects() {
-        return mSubjectDao.getSubjects();
+    public List<Rooms> getRooms() {
+        return roomsDao.getRooms();
     }
 
-    public void deleteSubject(Subject subject) {
-        mSubjectDao.deleteSubject(subject);
-    }
-
-    public Question getQuestion(long questionId) {
-        return mQuestionDao.getQuestion(questionId);
-    }
-
-    public List<Question> getQuestions(long subjectId) {
-        return mQuestionDao.getQuestions(subjectId);
-    }
-
-    public void addQuestion(Question question) {
-        long questionId = mQuestionDao.addQuestion(question);
-        question.setId(questionId);
-    }
-
-    public void updateQuestion(Question question) {
-        mQuestionDao.updateQuestion(question);
-    }
-
-    public void deleteQuestion(Question question) {
-        mQuestionDao.deleteQuestion(question);
+    public void deleteSubject(Rooms room) {
+        roomsDao.deleteRoom(room);
     }
 }
