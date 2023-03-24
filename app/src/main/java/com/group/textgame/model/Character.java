@@ -10,6 +10,14 @@ import androidx.room.TypeConverters;
 
 @Entity (tableName = "Characters")
 public abstract class Character {
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    protected long ID;
+
+    @NonNull
+    @ColumnInfo(name = "text")
+    protected String name;
     @NonNull
     public abstract String getName();
 

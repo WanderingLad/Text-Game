@@ -19,8 +19,32 @@ public class RoomsViewModel extends AndroidViewModel {
         return roomsRepo.getRooms();
     }
 
+    public Rooms getRoom(long roomId) {
+        return roomsRepo.getRoom(roomId);
+    }
+
     public void addRoom(Rooms room) {
         roomsRepo.addRoom(room);
+    }
+
+    public void deleteRoom(Rooms room) {
+        roomsRepo.deleteRoom(room);
+    }
+
+    public long getNorthRoom(long roomId) {
+        return roomsRepo.getNorthRoom(roomId);
+    }
+
+    public long getSouthRoom(long roomId) {
+        return roomsRepo.getSouthRoom(roomId);
+    }
+
+    public long getEastRoom(long roomId) {
+        return roomsRepo.getEastRoom(roomId);
+    }
+
+    public long getWestRoom(long roomId) {
+        return roomsRepo.getWestRoom(roomId);
     }
 }
 

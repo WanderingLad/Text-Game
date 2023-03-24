@@ -27,7 +27,7 @@ public interface RoomsDao {
     long getWestRoom(long id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long addRoom(Rooms rooms);
+    long addRoom(Rooms room);
 
     @Update
     void updateRoom(Rooms room);

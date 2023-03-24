@@ -9,11 +9,10 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 @Entity (tableName = "Characters")
-public class Player extends Character {
+public class Goblin extends Character {
 
-
-    public Player(String name) {
-        this.name = name;
+    public Goblin(){
+        this.name = "Goblin";
     }
 
     @NonNull

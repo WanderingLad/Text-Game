@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Text Game</string>
-    <string name="test1">Hello World</string>
-    <string name="test2">World Hello</string>
+    <string name="room_info">Room Info</string>
+    <string name="north_button">Check North Room</string>
+    <string name="south_button">Check South Room</string>
+    <string name="east_button">Check East Room</string>
+    <string name="west_button">Check West Room</string>
 </resources>
