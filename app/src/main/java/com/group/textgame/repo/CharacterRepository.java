@@ -33,12 +33,6 @@ public class CharacterRepository {
         Player player = new Player("player");
 
         characterDao.addPlayer(player);
-
-        Log.d("test", String.valueOf(characterDao.getPlayer(1)));
-
-//        if (characterDao.getCharacters().isEmpty()) {
-//            addStarterData();
-//        }
     }
 
     private void addStarterData() {

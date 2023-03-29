@@ -15,8 +15,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private RoomsViewModel roomsViewModel;
 
-    private CharacterViewModel characterViewModel;
-
     private Rooms activeRoom;
 
     private TextView changeableText;
@@ -26,8 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        roomsViewModel = new ViewModelProvider(this).get(RoomsViewModel.class);
-        characterViewModel = new ViewModelProvider(this).get(CharacterViewModel.class);
+        roomsViewModel = new RoomsViewModel(getApplication());
         changeableText = findViewById(R.id.text_holder);
 
         activeRoom = roomsViewModel.getRoom(1);
