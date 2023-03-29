@@ -1,21 +1,35 @@
 package com.group.textgame.model;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.group.textgame.data.Armor;
 import com.group.textgame.data.MainHand;
 
-@Entity
-public class Player extends Character {
+@Entity (foreignKeys = @ForeignKey(entity = Rooms.class, parentColumns = "id",
+        childColumns = "room_id", onDelete = CASCADE))
+public class Enemy extends Character {
 
+    @ColumnInfo(name = "room_id")
+    private long roomID;
 
-    public Player(String name) {
+    public long getRoomID() {
+        return roomID;
+    }
+
+    public void setRoomID(long roomID) {
+        this.roomID = roomID;
+    }
+
+    public Enemy(String name) {
         this.name = name;
     }
 

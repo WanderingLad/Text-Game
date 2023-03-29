@@ -8,6 +8,9 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import com.group.textgame.data.Armor;
+import com.group.textgame.data.MainHand;
+
 @Entity (tableName = "Characters")
 public abstract class Character {
 
@@ -16,8 +19,16 @@ public abstract class Character {
     protected long ID;
 
     @NonNull
-    @ColumnInfo(name = "text")
+    @ColumnInfo(name = "characterName")
     protected String name;
+
+    @ColumnInfo(name = "weapon")
+    protected MainHand weapon;
+
+    @NonNull
+    @ColumnInfo(name = "armor")
+    protected Armor armor;
+
     @NonNull
     public abstract String getName();
 
@@ -26,5 +37,15 @@ public abstract class Character {
     public abstract long getID();
 
     public abstract void setID(long ID);
+
+    @NonNull
+    public abstract Armor getArmor();
+
+    public abstract void setArmor(@NonNull Armor armor);
+
+    @NonNull
+    public abstract MainHand getWeapon();
+
+    public abstract void setWeapon(MainHand weapon);
 }
 

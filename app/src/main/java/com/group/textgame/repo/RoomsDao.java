@@ -3,6 +3,8 @@ package com.group.textgame.repo;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.room.*;
+
+import com.group.textgame.model.Enemy;
 import com.group.textgame.model.Rooms;
 import java.util.List;
 

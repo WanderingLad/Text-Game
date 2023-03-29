@@ -24,17 +24,27 @@ public class CharacterRepository {
     }
 
     private CharacterRepository(Context context) {
-        CharacterDatabase database = Room.databaseBuilder(context, CharacterDatabase.class, "character.db")
+        CharacterDatabase database = Room.databaseBuilder(context, CharacterDatabase.class, "characters.db")
                 .allowMainThreadQueries()
                 .build();
 
         characterDao = database.characterDao();
 
-//        if (characterDao.getRooms().isEmpty()) {
+        Player player = new Player("player");
+
+        characterDao.addPlayer(player);
+
+        Log.d("test", String.valueOf(characterDao.getPlayer(1)));
+
+//        if (characterDao.getCharacters().isEmpty()) {
 //            addStarterData();
 //        }
     }
 
     private void addStarterData() {
+    }
+
+    public Player getActivePlayer() {
+        return activePlayer;
     }
 }
