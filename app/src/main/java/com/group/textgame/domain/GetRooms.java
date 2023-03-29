@@ -1,5 +1,7 @@
 package com.group.textgame.domain;
 
+import android.util.Log;
+
 import com.group.textgame.repo.CharacterRepository;
 import com.group.textgame.repo.RoomsRepository;
 
