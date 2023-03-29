@@ -25,7 +25,6 @@ public abstract class Character {
     @ColumnInfo(name = "weapon")
     protected MainHand weapon;
 
-    @NonNull
     @ColumnInfo(name = "armor")
     protected Armor armor;
 

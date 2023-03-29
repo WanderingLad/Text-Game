@@ -36,7 +36,7 @@ public class Player extends Character {
         this.ID = ID;
     }
 
-    @NonNull
+//    @NonNull
     public MainHand getWeapon() {
         return weapon;
     }
@@ -45,7 +45,7 @@ public class Player extends Character {
         this.weapon = weapon;
     }
 
-    @NonNull
+//    @NonNull
     public Armor getArmor() {
         return armor;
     }
