@@ -8,6 +8,8 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import java.util.List;
+
 @Entity (tableName = "Rooms")
 public class Rooms {
 
@@ -30,6 +32,9 @@ public class Rooms {
 
     @ColumnInfo(name = "west")
     private long westRoom;
+
+    @ColumnInfo(name = "enemy")
+    private long enemy;
 
     public Rooms() {}
     public Rooms(@NonNull String text) {
@@ -84,6 +89,14 @@ public class Rooms {
 
     public void setWestRoom(long westRoom) {
         this.westRoom = westRoom;
+    }
+
+    public long getEnemy() {
+        return enemy;
+    }
+
+    public void setEnemy(long enemy) {
+        this.enemy = enemy;
     }
 
 

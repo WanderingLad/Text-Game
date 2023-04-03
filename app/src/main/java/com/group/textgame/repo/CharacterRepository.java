@@ -5,7 +5,10 @@ import android.util.Log;
 
 import androidx.room.Room;
 
+import com.group.textgame.model.Enemy;
 import com.group.textgame.model.Player;
+import com.group.textgame.model.Rooms;
+
 import java.util.List;
 
 public class CharacterRepository {
@@ -29,16 +32,37 @@ public class CharacterRepository {
                 .build();
 
         characterDao = database.characterDao();
-
-        Player player = new Player("player");
-
-        characterDao.addPlayer(player);
     }
 
-    private void addStarterData() {
+    public void addPlayer(Player player) {
+        long id = characterDao.addPlayer(player);
+
+        player.setID(id);
+    }
+
+    public void addEnemy(Enemy enemy) {
+        long id = characterDao.addEnemy(enemy);
+
+        enemy.setID(id);
+    }
+
+    public void setActivePlayer(Player player) {
+        this.activePlayer = player;
     }
 
     public Player getActivePlayer() {
         return activePlayer;
+    }
+
+    public void updatePlayer(Player player) {
+        characterDao.updatePlayer(player);
+    }
+
+    public Enemy getEnemy(long roomId) {
+        return characterDao.getEnemy(roomId);
+    }
+
+    public void updateEnemy(Enemy enemy) {
+        characterDao.updateEnemy(enemy);
     }
 }

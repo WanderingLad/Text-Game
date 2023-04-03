@@ -16,9 +16,6 @@ public interface CharacterDao {
     @Query("SELECT * FROM Enemy WHERE id = :id")
     Enemy getEnemy(long id);
 
-    @Query("SELECT * FROM Enemy WHERE room_id = :roomID ORDER BY id COLLATE NOCASE ")
-    List<Enemy> getEnemies(long roomID);
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long addPlayer(Player player);
 

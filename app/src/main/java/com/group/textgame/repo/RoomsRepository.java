@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.room.Room;
+
+import com.group.textgame.model.Enemy;
 import com.group.textgame.model.Rooms;
 import java.util.List;
 
@@ -28,52 +30,15 @@ public class RoomsRepository {
 
         roomsDao = database.roomsDao();
 
-        if (roomsDao.getRooms().isEmpty()) {
-            addStarterData();
-            setupGrid();
-        }
+
     }
 
-    private void addStarterData() {
-        Rooms room = new Rooms("Room 1");
-        Rooms room2 = new Rooms("Room 2");
-        Rooms room3 = new Rooms("Room 3");
-        Rooms room4 = new Rooms("Room 4");
-
-        roomsDao.addRoom(room);
-        roomsDao.addRoom(room2);
-        roomsDao.addRoom(room3);
-        roomsDao.addRoom(room4);
+    public void setActiveRoom(Rooms room){
+        this.activeRoom = room;
     }
 
-    private void setupGrid() {
-        activeRoom = roomsDao.getRoom(1);
-
-        activeRoom.setNorthRoom(2);
-        activeRoom.setEastRoom(4);
-
-        roomsDao.updateRoom(activeRoom);
-
-        activeRoom = roomsDao.getRoom(2);
-
-        activeRoom.setSouthRoom(1);
-        activeRoom.setEastRoom(3);
-
-        roomsDao.updateRoom(activeRoom);
-
-        activeRoom = roomsDao.getRoom(3);
-
-        activeRoom.setWestRoom(2);
-        activeRoom.setSouthRoom(4);
-
-        roomsDao.updateRoom(activeRoom);
-
-        activeRoom = roomsDao.getRoom(4);
-
-        activeRoom.setNorthRoom(3);
-        activeRoom.setWestRoom(1);
-
-        roomsDao.updateRoom(activeRoom);
+    public Rooms getActiveRoom() {
+        return this.activeRoom;
     }
 
     public void addRoom(Rooms room) {
@@ -93,19 +58,11 @@ public class RoomsRepository {
         roomsDao.deleteRoom(room);
     }
 
-    public long getNorthRoom(long roomId) {
-        return roomsDao.getNorthRoom(roomId);
+    public long getEnemy(long roomId) {
+        return roomsDao.getEnemy(roomId);
     }
 
-    public long getSouthRoom(long roomId) {
-        return roomsDao.getSouthRoom(roomId);
-    }
-
-    public long getEastRoom(long roomId) {
-        return roomsDao.getEastRoom(roomId);
-    }
-
-    public long getWestRoom(long roomId) {
-        return roomsDao.getWestRoom(roomId);
+    public void updateRoom(Rooms room) {
+        roomsDao.updateRoom(room);
     }
 }

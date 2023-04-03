@@ -28,6 +28,9 @@ public interface RoomsDao {
     @Query("SELECT west FROM Rooms WHERE id = :id")
     long getWestRoom(long id);
 
+    @Query("SELECT enemy FROM Rooms WHERE id = :id")
+    long getEnemy(long id);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long addRoom(Rooms room);
 
