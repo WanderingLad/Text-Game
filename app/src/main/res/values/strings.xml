@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">Text Game</string>
     <string name="room_info">Room Info</string>
+    <string name="player_health">Player Health</string>
+    <string name="enemy_health">Enemy Health</string>
+    <string name="enemy_name">Enemy Name</string>
     <string name="north_button">Check North Room</string>
     <string name="south_button">Check South Room</string>
     <string name="east_button">Check East Room</string>
     <string name="west_button">Check West Room</string>
+    <string name="attack_enemy">Attack Enemy</string>
+    <string name="attack_player">Attack Player</string>
 </resources>

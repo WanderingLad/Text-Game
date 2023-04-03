@@ -14,7 +14,6 @@ import com.group.textgame.data.MainHand;
 @Entity
 public class Player extends Character {
 
-
     public Player(String name) {
         this.name = name;
     }
@@ -45,7 +44,35 @@ public class Player extends Character {
         this.weapon = weapon;
     }
 
-//    @NonNull
+    @Override
+    public int getHealth() {
+        return this.health;
+    }
+
+    @Override
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    @Override
+    public int getDamage() {
+        return this.damage;
+    }
+
+    @Override
+    public void setDamage(int damage) {
+    this.damage = damage;
+    }
+
+    @Override
+    public void attackTarget(Player player) {}
+
+    @Override
+    public void attackTarget(Enemy enemy) {
+        enemy.setHealth(enemy.getHealth() - getDamage());
+    }
+
+    //    @NonNull
     public Armor getArmor() {
         return armor;
     }

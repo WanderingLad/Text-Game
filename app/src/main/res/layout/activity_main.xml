@@ -20,6 +20,30 @@
         android:textColor="@color/white"
         android:textSize="24sp" />
 
+    <TextView
+        android:id="@+id/player_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/player_health"
+        android:textColor="@color/white"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/enemyname_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/enemy_name"
+        android:textColor="@color/white"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/enemy_holder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/enemy_health"
+        android:textColor="@color/white"
+        android:textSize="24sp" />
+
     <Button
         android:id="@+id/north_button"
         android:text="@string/north_button"
@@ -59,4 +83,24 @@
         android:backgroundTint="@color/white"
         android:textColor="@color/black"
         android:onClick="checkWest" />
+
+    <Button
+        android:id="@+id/player_button"
+        android:text="@string/attack_enemy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:onClick="attackEnemy" />
+
+    <Button
+        android:id="@+id/player_button"
+        android:text="@string/attack_player"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:onClick="attackPlayer" />
     </LinearLayout>

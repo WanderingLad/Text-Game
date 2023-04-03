@@ -18,33 +18,51 @@ public abstract class Character {
     @ColumnInfo(name = "id")
     protected long ID;
 
+    public abstract long getID();
+
+    public abstract void setID(long ID);
+
     @NonNull
     @ColumnInfo(name = "characterName")
     protected String name;
-
-    @ColumnInfo(name = "weapon")
-    protected MainHand weapon;
-
-    @ColumnInfo(name = "armor")
-    protected Armor armor;
 
     @NonNull
     public abstract String getName();
 
     public abstract void setName(@NonNull String name);
 
-    public abstract long getID();
+    @ColumnInfo(name = "health")
+    protected int health;
 
-    public abstract void setID(long ID);
+    public abstract int getHealth();
+
+    public abstract void setHealth(int health);
+
+    @ColumnInfo(name = "damange")
+    protected int damage;
+
+    public abstract int getDamage();
+
+    public abstract void setDamage(int damage);
+
+    @ColumnInfo(name = "weapon")
+    protected MainHand weapon;
+
+    @NonNull
+    public abstract MainHand getWeapon();
+
+    public abstract void setWeapon(MainHand weapon);
+
+    @ColumnInfo(name = "armor")
+    protected Armor armor;
 
     @NonNull
     public abstract Armor getArmor();
 
     public abstract void setArmor(@NonNull Armor armor);
 
-    @NonNull
-    public abstract MainHand getWeapon();
+    public abstract void attackTarget(Player player);
 
-    public abstract void setWeapon(MainHand weapon);
+    public abstract void attackTarget(Enemy enemy);
 }
 

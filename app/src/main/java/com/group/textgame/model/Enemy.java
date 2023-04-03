@@ -14,20 +14,8 @@ import androidx.room.TypeConverters;
 import com.group.textgame.data.Armor;
 import com.group.textgame.data.MainHand;
 
-@Entity (foreignKeys = @ForeignKey(entity = Rooms.class, parentColumns = "id",
-        childColumns = "room_id", onDelete = CASCADE))
+@Entity
 public class Enemy extends Character {
-
-    @ColumnInfo(name = "room_id")
-    private long roomID;
-
-    public long getRoomID() {
-        return roomID;
-    }
-
-    public void setRoomID(long roomID) {
-        this.roomID = roomID;
-    }
 
     public Enemy(String name) {
         this.name = name;
@@ -40,6 +28,26 @@ public class Enemy extends Character {
 
     public void setName(@NonNull String name){
         this.name = name;
+    }
+
+    @Override
+    public int getHealth() {
+        return this.health;
+    }
+
+    @Override
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    @Override
+    public int getDamage() {
+        return this.damage;
+    }
+
+    @Override
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 
     public long getID(){
@@ -66,6 +74,16 @@ public class Enemy extends Character {
 
     public void setArmor(@NonNull Armor armor) {
         this.armor = armor;
+    }
+
+    @Override
+    public void attackTarget(Player player) {
+        player.setHealth(player.getHealth() - getDamage());
+    }
+
+    @Override
+    public void attackTarget(Enemy enemy) {
+
     }
 }
 
