@@ -5,12 +5,13 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import java.util.List;
 
-@Entity (tableName = "Rooms")
+@Entity(tableName = "Rooms")
 public class Rooms {
 
     @PrimaryKey(autoGenerate = true)
@@ -35,6 +36,9 @@ public class Rooms {
 
     @ColumnInfo(name = "enemy")
     private long enemy;
+
+    @ColumnInfo(name = "level")
+    private long level;
 
     public Rooms() {}
     public Rooms(@NonNull String text) {
@@ -99,6 +103,12 @@ public class Rooms {
         this.enemy = enemy;
     }
 
+    public long getLevel() {
+        return level;
+    }
 
+    public void setLevel(long level) {
+        this.level = level;
+    }
 }
 

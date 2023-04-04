@@ -29,8 +29,6 @@ public class RoomsRepository {
                 .build();
 
         roomsDao = database.roomsDao();
-
-
     }
 
     public void setActiveRoom(Rooms room){
@@ -52,6 +50,10 @@ public class RoomsRepository {
 
     public List<Rooms> getRooms() {
         return roomsDao.getRooms();
+    }
+
+    public List<Rooms> getRooms(long level) {
+        return roomsDao.getRooms(level);
     }
 
     public void deleteRoom(Rooms room) {

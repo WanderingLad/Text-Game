@@ -2,36 +2,31 @@ package com.group.textgame.domain;
 
 import android.util.Log;
 
+import androidx.room.Room;
+
 import com.group.textgame.model.Enemy;
+import com.group.textgame.model.Level;
 import com.group.textgame.model.Player;
 import com.group.textgame.model.Rooms;
 import com.group.textgame.repo.CharacterRepository;
+import com.group.textgame.repo.LevelRepository;
 import com.group.textgame.repo.RoomsRepository;
 
 public class SetupStarterData {
 
     private final RoomsRepository roomsRepo;
     private final CharacterRepository characterRepo;
+    private final LevelRepository levelRepo;
 
-    public SetupStarterData(CharacterRepository characterRepo, RoomsRepository roomsRepo){
+    public SetupStarterData(CharacterRepository characterRepo, RoomsRepository roomsRepo, LevelRepository levelRepo){
         this.characterRepo = characterRepo;
         this.roomsRepo = roomsRepo;
+        this.levelRepo = levelRepo;
 
-        addStarterData();
         setupGrid();
     }
 
-    private void addStarterData() {
-        Rooms room = new Rooms("Room 1");
-        Rooms room2 = new Rooms("Room 2");
-        Rooms room3 = new Rooms("Room 3");
-        Rooms room4 = new Rooms("Room 4");
-
-        roomsRepo.addRoom(room);
-        roomsRepo.addRoom(room2);
-        roomsRepo.addRoom(room3);
-        roomsRepo.addRoom(room4);
-
+    private void setupGrid() {
         Player player = new Player("player");
 
         player.setHealth(100);
@@ -41,10 +36,12 @@ public class SetupStarterData {
         characterRepo.addPlayer(player);
 
         characterRepo.setActivePlayer(player);
-    }
 
-    private void setupGrid() {
-        roomsRepo.setActiveRoom(roomsRepo.getRoom(1));
+        //Room 1
+        Rooms room = new Rooms("Room 1");
+
+        roomsRepo.addRoom(room);
+        roomsRepo.setActiveRoom(room);
 
         Enemy enemy = new Enemy("Enemy 1");
 
@@ -54,13 +51,22 @@ public class SetupStarterData {
 
         characterRepo.addEnemy(enemy);
 
-        roomsRepo.getActiveRoom().setEnemy(enemy.getID());
-        roomsRepo.getActiveRoom().setNorthRoom(2);
-        roomsRepo.getActiveRoom().setEastRoom(4);
+        room.setEnemy(enemy.getID());
+        room.setNorthRoom(2);
+        room.setEastRoom(4);
 
-        roomsRepo.updateRoom(roomsRepo.getActiveRoom());
+        Level level = new Level("Level 1");
 
-        roomsRepo.setActiveRoom(roomsRepo.getRoom(2));
+        levelRepo.addLevel(level);
+
+        room.setLevel(level.getID());
+
+        roomsRepo.updateRoom(room);
+
+        //Room 2
+        Rooms room2 = new Rooms("Room 2");
+
+        roomsRepo.addRoom(room2);
 
         Enemy enemy1 = new Enemy("Enemy 2");
 
@@ -70,13 +76,18 @@ public class SetupStarterData {
 
         characterRepo.addEnemy(enemy1);
 
-        roomsRepo.getActiveRoom().setEnemy(enemy1.getID());
-        roomsRepo.getActiveRoom().setSouthRoom(1);
-        roomsRepo.getActiveRoom().setEastRoom(3);
+        room2.setEnemy(enemy1.getID());
+        room2.setSouthRoom(1);
+        room2.setEastRoom(3);
 
-        roomsRepo.updateRoom( roomsRepo.getActiveRoom());
+        room2.setLevel(level.getID());
 
-        roomsRepo.setActiveRoom(roomsRepo.getRoom(3));
+        roomsRepo.updateRoom(room2);
+
+        //Room 3
+        Rooms room3 = new Rooms("Room 3");
+
+        roomsRepo.addRoom(room3);
 
         Enemy enemy2 = new Enemy("Enemy 3");
 
@@ -86,13 +97,18 @@ public class SetupStarterData {
 
         characterRepo.addEnemy(enemy2);
 
-        roomsRepo.getActiveRoom().setEnemy(enemy2.getID());
-        roomsRepo.getActiveRoom().setWestRoom(2);
-        roomsRepo.getActiveRoom().setSouthRoom(4);
+        room3.setEnemy(enemy2.getID());
+        room3.setWestRoom(2);
+        room3.setSouthRoom(4);
 
-        roomsRepo.updateRoom( roomsRepo.getActiveRoom());
+        room3.setLevel(level.getID());
 
-        roomsRepo.setActiveRoom(roomsRepo.getRoom(4));
+        roomsRepo.updateRoom( room3);
+
+        //Room 4
+        Rooms room4 = new Rooms("Room 4");
+
+        roomsRepo.addRoom(room4);
 
         Enemy enemy3 = new Enemy("Enemy 4");
 
@@ -102,12 +118,12 @@ public class SetupStarterData {
 
         characterRepo.addEnemy(enemy3);
 
-        roomsRepo.getActiveRoom().setEnemy(enemy3.getID());
-        roomsRepo.getActiveRoom().setNorthRoom(3);
-        roomsRepo.getActiveRoom().setWestRoom(1);
+        room4.setEnemy(enemy3.getID());
+        room4.setNorthRoom(3);
+        room4.setWestRoom(1);
 
-        roomsRepo.updateRoom(roomsRepo.getActiveRoom());
+        room4.setLevel(level.getID());
 
-        roomsRepo.setActiveRoom(roomsRepo.getRoom(1));
+        roomsRepo.updateRoom(room4);
     }
 }
