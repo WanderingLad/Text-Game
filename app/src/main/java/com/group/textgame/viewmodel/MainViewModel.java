@@ -11,6 +11,7 @@ import com.group.textgame.model.Enemy;
 import com.group.textgame.model.Player;
 import com.group.textgame.model.Rooms;
 import com.group.textgame.repo.CharacterRepository;
+import com.group.textgame.repo.LevelRepository;
 import com.group.textgame.repo.RoomsRepository;
 import com.group.textgame.domain.*;
 
@@ -19,6 +20,8 @@ import java.util.List;
 public class MainViewModel extends AndroidViewModel {
     private final RoomsRepository roomsRepo;
     private final CharacterRepository characterRepo;
+
+    private final LevelRepository levelRepo;
     private MutableLiveData<Rooms> _activeRoom;
     private MutableLiveData<Enemy> _activeEnemy;
     private MutableLiveData<Integer> _activePlayerHealth;
@@ -28,9 +31,10 @@ public class MainViewModel extends AndroidViewModel {
         super(application);
         roomsRepo = RoomsRepository.getInstance(application.getApplicationContext());
         characterRepo = CharacterRepository.getInstance(application.getApplicationContext());
+        levelRepo = LevelRepository.getInstance(application.getApplicationContext());
 
         if (roomsRepo.getRooms().isEmpty()) {
-            SetupStarterData starterData = new SetupStarterData(characterRepo, roomsRepo);
+            SetupStarterData starterData = new SetupStarterData(characterRepo, roomsRepo, levelRepo);
         }
 
         _activeRoom = new MutableLiveData<Rooms>();

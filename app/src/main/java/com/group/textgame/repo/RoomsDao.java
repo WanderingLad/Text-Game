@@ -16,6 +16,9 @@ public interface RoomsDao {
     @Query("SELECT * FROM Rooms ORDER BY id COLLATE NOCASE")
     List<Rooms> getRooms();
 
+    @Query("SELECT * FROM Rooms WHERE level = :level ORDER BY id COLLATE NOCASE")
+    List<Rooms> getRooms(long level);
+
     @Query("SELECT north FROM Rooms WHERE id = :id")
     long getNorthRoom(long id);
 
