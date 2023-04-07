@@ -12,95 +12,10 @@
     android:background="@color/black"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/text_holder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/room_info"
-        android:textColor="@color/white"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/player_holder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/player_health"
-        android:textColor="@color/white"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/enemyname_holder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/enemy_name"
-        android:textColor="@color/white"
-        android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/enemy_holder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/enemy_health"
-        android:textColor="@color/white"
-        android:textSize="24sp" />
-
-    <Button
-        android:id="@+id/north_button"
-        android:text="@string/north_button"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/start_screen"
+        android:name="com.group.textgame.fragments.StartScreenFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/white"
-        android:textColor="@color/black"
-        android:onClick="checkNorth" />
-
-    <Button
-        android:id="@+id/south_button"
-        android:text="@string/south_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/white"
-        android:textColor="@color/black"
-        android:onClick="checkSouth" />
-
-    <Button
-        android:id="@+id/east_button"
-        android:text="@string/east_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/white"
-        android:textColor="@color/black"
-        android:onClick="checkEast" />
-
-    <Button
-        android:id="@+id/west_button"
-        android:text="@string/west_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/white"
-        android:textColor="@color/black"
-        android:onClick="checkWest" />
-
-    <Button
-        android:id="@+id/player_button"
-        android:text="@string/attack_enemy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/white"
-        android:textColor="@color/black"
-        android:onClick="attackEnemy" />
-
-    <Button
-        android:id="@+id/player_button"
-        android:text="@string/attack_player"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/white"
-        android:textColor="@color/black"
-        android:onClick="attackPlayer" />
+        android:layout_height="match_parent"
+        tools:layou="@layout/start_screen" />
     </LinearLayout>

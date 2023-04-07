@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.group.textgame.fragments.StartScreenFragment"
+    android:orientation="vertical">
+
+    <GridLayout
+        android:id="@+id/topInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_columnWeight="1"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/player_holder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/player_name"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+            <ProgressBar
+                android:id="@+id/playerHealthBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="0"
+                android:progressBackgroundTint="@color/white"
+                android:progressTint="@color/green" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/room_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="end"
+            android:text="@string/room_info"
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+
+    </GridLayout>
+
+    <ScrollView
+        android:id="@+id/SCROLLER_ID"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:fillViewport="true"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/TEXT_STATUS_ID"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:text="@string/room_info"/>
+    </ScrollView>
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/enemyname_holder"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/enemy_name"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="24sp" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/enemy_holder"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/enemy_health"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="24sp" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/north_button"-->
+<!--        android:text="@string/north_button"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:backgroundTint="@color/white"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:onClick="checkNorth" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/south_button"-->
+<!--        android:text="@string/south_button"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:backgroundTint="@color/white"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:onClick="checkSouth" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/east_button"-->
+<!--        android:text="@string/east_button"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:backgroundTint="@color/white"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:onClick="checkEast" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/west_button"-->
+<!--        android:text="@string/west_button"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:backgroundTint="@color/white"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:onClick="checkWest" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/player_button"-->
+<!--        android:text="@string/attack_enemy"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:backgroundTint="@color/white"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:onClick="attackEnemy" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/enemy_button"-->
+<!--        android:text="@string/attack_player"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:backgroundTint="@color/white"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:onClick="attackPlayer" />-->
+
+</LinearLayout>

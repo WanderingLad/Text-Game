@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Text Game</string>
     <string name="room_info">Room Info</string>
-    <string name="player_health">Player Health</string>
+    <string name="player_name">Player</string>
     <string name="enemy_health">Enemy Health</string>
     <string name="enemy_name">Enemy Name</string>
     <string name="north_button">Check North Room</string>

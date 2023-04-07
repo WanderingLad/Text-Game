@@ -103,6 +103,10 @@ public class MainViewModel extends AndroidViewModel {
     public LiveData<Enemy> getActiveEnemy() {
         return _activeEnemy;
     }
+
+    public long getActiveLevel() {
+        return _activeRoom.getValue().getLevel();
+    }
 }
 
 
