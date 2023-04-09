@@ -36,7 +36,7 @@ public class StartScreenFragment extends Fragment {
 
     private Enemy activeEnemy;
 
-    private TextView enemyHealthText, enemyNameText, roomInfo;
+    private TextView enemyHealthText, enemyNameText, roomInfo, textBox;
 
     private ProgressBar playerHealth;
 
@@ -110,10 +110,20 @@ public class StartScreenFragment extends Fragment {
 //        enemyHealthText = parentView.findViewById(R.id.enemy_holder);
 //        enemyNameText = parentView.findViewById(R.id.enemyname_holder);
         roomInfo = parentView.findViewById(R.id.room_info);
+        textBox = parentView.findViewById(R.id.text_box);
 
         playerHealth = parentView.findViewById(R.id.playerHealthBar);
 
         playerHealth.setProgress(activePlayer.getHealth(), true);
+
+        Button add = (Button) parentView.findViewById(R.id.add_Text);
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addText();
+            }
+        });
 
 //        setEnemyHealthText(activeEnemy.getHealth());
 //        setEnemyNameText(activeEnemy.getName());
@@ -220,6 +230,10 @@ public class StartScreenFragment extends Fragment {
 
     private void setRoomInfo(long room, long level) {
         roomInfo.setText(level + " - " + room);
+    }
+
+    private void addText(){
+        textBox.append("\n" + getResources().getString(R.string.add_text));
     }
 
 //    private void setEnemyHealthText(int text) {

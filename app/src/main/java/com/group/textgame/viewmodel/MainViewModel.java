@@ -20,7 +20,6 @@ import java.util.List;
 public class MainViewModel extends AndroidViewModel {
     private final RoomsRepository roomsRepo;
     private final CharacterRepository characterRepo;
-
     private final LevelRepository levelRepo;
     private MutableLiveData<Rooms> _activeRoom;
     private MutableLiveData<Enemy> _activeEnemy;

@@ -4,10 +4,7 @@
     <string name="player_name">Player</string>
     <string name="enemy_health">Enemy Health</string>
     <string name="enemy_name">Enemy Name</string>
-    <string name="north_button">Check North Room</string>
-    <string name="south_button">Check South Room</string>
-    <string name="east_button">Check East Room</string>
-    <string name="west_button">Check West Room</string>
-    <string name="attack_enemy">Attack Enemy</string>
-    <string name="attack_player">Attack Player</string>
+    <string name="left_button">Left Button</string>
+    <string name="right_button">Right Button</string>
+    <string name="add_text">Add Text</string>
 </resources>
