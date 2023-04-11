@@ -11,12 +11,11 @@
     android:paddingRight="16dp"
     android:paddingTop="16dp"
     android:background="@color/black"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/start_screen"
-        android:name="com.group.textgame.fragments.StartScreenFragment"
+        android:id="@+id/screen"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout="@layout/start_screen" />
+        android:layout_height="match_parent" />
     </LinearLayout>

@@ -1,7 +1,6 @@
 package com.group.textgame.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,25 +20,14 @@ import com.group.textgame.model.Player;
 import com.group.textgame.model.Rooms;
 import com.group.textgame.viewmodel.MainViewModel;
 
-public class StartScreenFragment extends Fragment {
+public class EndGameFragment extends Fragment {
 
     private MainViewModel mainViewModel;
 
-    private Button start;
-
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View parentView = inflater.inflate(R.layout.start_screen, container, false);
+        View parentView = inflater.inflate(R.layout.end_screen, container, false);
 
         mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
-
-        start = parentView.findViewById(R.id.start_game);
-
-        start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainViewModel.setActiveScreen(0);
-            }
-        });
 
         return parentView;
     }

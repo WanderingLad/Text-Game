@@ -21,6 +21,7 @@ public class MainViewModel extends AndroidViewModel {
     private final RoomsRepository roomsRepo;
     private final CharacterRepository characterRepo;
     private final LevelRepository levelRepo;
+    private MutableLiveData<Integer> _screen;
     private MutableLiveData<Rooms> _activeRoom;
     private MutableLiveData<Enemy> _activeEnemy;
     private MutableLiveData<Integer> _activePlayerHealth;
@@ -42,7 +43,9 @@ public class MainViewModel extends AndroidViewModel {
 
         _activeEnemyHealth = new MutableLiveData<Integer>();
 
-        _activeEnemy = new MutableLiveData<>();
+        _activeEnemy = new MutableLiveData<Enemy>();
+
+        _screen = new MutableLiveData<Integer>();
 
         _activeRoom.setValue(roomsRepo.getActiveRoom());
 
@@ -51,6 +54,8 @@ public class MainViewModel extends AndroidViewModel {
         _activeEnemyHealth.setValue(getActiveRoomEnemy().getHealth());
 
         _activeEnemy.setValue(getActiveRoomEnemy());
+
+        _screen.setValue(1);
     }
 
     public void setActiveRoom(Rooms room){
@@ -67,6 +72,10 @@ public class MainViewModel extends AndroidViewModel {
         characterRepo.updatePlayer(getActivePlayer());
     }
 
+    public void setActiveScreen(Integer i){
+        _screen.setValue(i);
+    }
+
     public LiveData<Rooms> getActiveRoom(){
         return _activeRoom;
     }
@@ -77,6 +86,10 @@ public class MainViewModel extends AndroidViewModel {
 
     public LiveData<Integer> getEnemyHealth(){
         return _activeEnemyHealth;
+    }
+
+    public LiveData<Integer> getActiveScreen(){
+        return _screen;
     }
 
     public List<Rooms> getRooms() {
