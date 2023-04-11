@@ -84,7 +84,6 @@
             android:layout_columnWeight="1"
             android:backgroundTint="@color/black"
             android:contentDescription="@string/left_button"
-            android:onClick="checkNorth"
             android:scaleType="center"
             android:src="@drawable/left_arrow" />
 
@@ -106,18 +105,16 @@
             android:layout_columnWeight="1"
             android:backgroundTint="@color/black"
             android:contentDescription="@string/right_button"
-            android:onClick="shiftRight"
             android:src="@drawable/right_arrow" />
     </GridLayout>
 
         <Button
             android:id="@+id/action_button"
-            android:text="@string/add_text"
+            android:text="@string/action"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/white"
-            android:textColor="@color/black"
-            android:onClick="addText" />
+            android:textColor="@color/black"/>
 
 </LinearLayout>

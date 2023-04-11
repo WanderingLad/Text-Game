@@ -23,8 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/white"
-        android:textColor="@color/black"
-        android:onClick="addText" />
+        android:textColor="@color/black" />
 
     <Button
         android:id="@+id/quit_game"
@@ -33,7 +32,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/white"
-        android:textColor="@color/black"
-        android:onClick="addText" />
+        android:textColor="@color/black" />
 
 </LinearLayout>
