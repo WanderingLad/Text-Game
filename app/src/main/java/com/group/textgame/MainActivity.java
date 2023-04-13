@@ -16,13 +16,18 @@ import com.group.textgame.viewmodel.MainViewModel;
 public class MainActivity extends AppCompatActivity {
     private MainViewModel mainViewModel;
 
+    private Controller controller;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(savedInstanceState == null) {
             setContentView(R.layout.activity_main);
 
-            mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+            controller = new Controller();
+
+            mainViewModel = new ViewModelProvider(this, new MainViewModel(this.getApplication(), getResources().getStringArray(R.array.room_names),
+                    getResources().getStringArray(R.array.initial_text), getResources().getStringArray(R.array.return_text))).get(MainViewModel.class);
 
             final Observer<Integer> screenObserver = new Observer<Integer>() {
                 @Override
@@ -52,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
             };
 
             mainViewModel.getActiveScreen().observe(this, screenObserver);
+
+            controller.StartGame();
         }
     }
 

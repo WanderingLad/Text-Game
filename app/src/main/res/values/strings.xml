@@ -13,6 +13,7 @@
     <string name="filler_text">Filler Text</string>
     <string-array name="main_array">
         <item>Leave</item>
+        <item>Attack</item>
     </string-array>
     <string name="action">Go</string>
     <string-array name="room_array">
@@ -20,5 +21,41 @@
         <item>South</item>
         <item>East</item>
         <item>West</item>
+    </string-array>
+    <string-array name="room_names">
+        <item name="room_1">Room 1</item>
+        <item name="room_2">Room 2</item>
+        <item name="room_3">Room 3</item>
+        <item name="room_4">Room 4</item>
+        <item name="room_5">Room 5</item>
+        <item name="room_6">Room 6</item>
+        <item name="room_7">Room 7</item>
+        <item name="room_8">Room 8</item>
+        <item name="room_9">Room 9</item>
+        <item name="room_10">Room 10</item>
+    </string-array>
+    <string-array name="initial_text">
+        <item name="room_1">Room 1 Initial</item>
+        <item name="room_2">Room 2 Initial</item>
+        <item name="room_3">Room 3 Initial</item>
+        <item name="room_4">Room 4 Initial</item>
+        <item name="room_5">Room 5 Initial</item>
+        <item name="room_6">Room 6 Initial</item>
+        <item name="room_7">Room 7 Initial</item>
+        <item name="room_8">Room 8 Initial</item>
+        <item name="room_9">Room 9 Initial</item>
+        <item name="room_10">Room 10 Initial</item>
+    </string-array>
+    <string-array name="return_text">
+        <item name="room_1">Room 1 Return</item>
+        <item name="room_2">Room 2 Return</item>
+        <item name="room_3">Room 3 Return</item>
+        <item name="room_4">Room 4 Return</item>
+        <item name="room_5">Room 5 Return</item>
+        <item name="room_6">Room 6 Return</item>
+        <item name="room_7">Room 7 Return</item>
+        <item name="room_8">Room 8 Return</item>
+        <item name="room_9">Room 9 Return</item>
+        <item name="room_10">Room 10 Return</item>
     </string-array>
 </resources>
