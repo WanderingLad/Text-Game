@@ -8,9 +8,6 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.group.textgame.data.Armor;
-import com.group.textgame.data.MainHand;
-
 @Entity
 public class Player extends Character {
 
@@ -33,15 +30,6 @@ public class Player extends Character {
 
     public void setID(long ID){
         this.ID = ID;
-    }
-
-//    @NonNull
-    public MainHand getWeapon() {
-        return weapon;
-    }
-
-    public void setWeapon(@NonNull MainHand weapon) {
-        this.weapon = weapon;
     }
 
     @Override
@@ -70,15 +58,6 @@ public class Player extends Character {
     @Override
     public void attackTarget(Enemy enemy) {
         enemy.setHealth(enemy.getHealth() - getDamage());
-    }
-
-    //    @NonNull
-    public Armor getArmor() {
-        return armor;
-    }
-
-    public void setArmor(@NonNull Armor armor) {
-        this.armor = armor;
     }
 }
 

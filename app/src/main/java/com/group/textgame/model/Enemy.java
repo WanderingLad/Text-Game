@@ -11,9 +11,6 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.group.textgame.data.Armor;
-import com.group.textgame.data.MainHand;
-
 @Entity
 public class Enemy extends Character {
 
@@ -56,24 +53,6 @@ public class Enemy extends Character {
 
     public void setID(long ID){
         this.ID = ID;
-    }
-
-    @NonNull
-    public MainHand getWeapon() {
-        return weapon;
-    }
-
-    public void setWeapon(@NonNull MainHand weapon) {
-        this.weapon = weapon;
-    }
-
-    @NonNull
-    public Armor getArmor() {
-        return armor;
-    }
-
-    public void setArmor(@NonNull Armor armor) {
-        this.armor = armor;
     }
 
     @Override

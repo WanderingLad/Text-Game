@@ -45,22 +45,6 @@ public abstract class Character {
 
     public abstract void setDamage(int damage);
 
-    @ColumnInfo(name = "weapon")
-    protected MainHand weapon;
-
-    @NonNull
-    public abstract MainHand getWeapon();
-
-    public abstract void setWeapon(MainHand weapon);
-
-    @ColumnInfo(name = "armor")
-    protected Armor armor;
-
-    @NonNull
-    public abstract Armor getArmor();
-
-    public abstract void setArmor(@NonNull Armor armor);
-
     public abstract void attackTarget(Player player);
 
     public abstract void attackTarget(Enemy enemy);

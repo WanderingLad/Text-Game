@@ -12,8 +12,19 @@
     <string name="add_text">Add Text</string>
     <string name="filler_text">Filler Text</string>
     <string-array name="main_array">
-        <item>Leave</item>
+        <item>Move</item>
+        <item>Look</item>
+        <item>Inventory</item>
+        <item>Search</item>
         <item>Attack</item>
+    </string-array>
+    <string-array name="item_array">
+        <item>Crate</item>
+        <item>Pallet</item>
+        <item>Rusty Knife</item>
+        <item>Bars</item>
+        <item>Room 2 Door</item>
+        <item>Torch</item>
     </string-array>
     <string name="action">Go</string>
     <string-array name="room_array">
