@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -35,13 +36,15 @@ public class MainScreenFragment extends Fragment {
 
     private TextView enemyHealthText, enemyNameText, roomInfo, textBox, actionText;
 
-    private ProgressBar playerHealth;
+    private ProgressBar playerHealth, enemyHealth;
 
     private Button actionButton, startButton;
 
     private ImageButton right, left;
 
     private String[] currentText;
+
+    private LinearLayout enemyOverlay;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View parentView = inflater.inflate(R.layout.main_screen, container, false);
@@ -80,15 +83,26 @@ public class MainScreenFragment extends Fragment {
             @Override
             public void onChanged(Enemy enemy) {
                 activeEnemy = enemy;
-//                setEnemyNameText(activeEnemy.getName());
-//                setEnemyHealthText(activeEnemy.getHealth());
+                if(activeEnemy != null){
+                    setEnemyNameText(activeEnemy.getName());
+                    setEnemyHealth(activeEnemy.getHealth());
+                    enemyOverlay.setVisibility(View.VISIBLE);
+                    textBox.setPadding(0, 150, 0, 0);
+                } else{
+                    textBox.setPadding(0, 0, 0, 0);
+
+                    enemyOverlay.setVisibility(View.INVISIBLE);
+                }
             }
         };
 
         final Observer<Integer> enemyHealthObserver = new Observer<Integer>() {
             @Override
             public void onChanged(Integer health) {
-//                setEnemyHealthText(activeEnemy.getHealth());
+                setEnemyHealth(activeEnemy.getHealth());
+                if(activeEnemy.getHealth() == 0){
+                    enemyOverlay.setVisibility(View.INVISIBLE);
+                }
             }
         };
 
@@ -110,8 +124,7 @@ public class MainScreenFragment extends Fragment {
     }
 
     private void setInitialText(View parentView) {
-//        enemyHealthText = parentView.findViewById(R.id.enemy_holder);
-//        enemyNameText = parentView.findViewById(R.id.enemyname_holder);
+        enemyNameText = parentView.findViewById(R.id.enemy_holder);
         roomInfo = parentView.findViewById(R.id.room_info);
         textBox = parentView.findViewById(R.id.text_box);
         actionText = parentView.findViewById(R.id.action_label);
@@ -122,10 +135,17 @@ public class MainScreenFragment extends Fragment {
 
         playerHealth = parentView.findViewById(R.id.playerHealthBar);
 
+        enemyHealth = parentView.findViewById(R.id.enemyHealthBar);
+
         playerHealth.setProgress(activePlayer.getHealth(), true);
 
-//        setEnemyHealthText(activeEnemy.getHealth());
-//        setEnemyNameText(activeEnemy.getName());
+        enemyOverlay = parentView.findViewById(R.id.enemy_overlay);
+
+        if (activeEnemy != null) {
+            enemyHealth.setProgress(activeEnemy.getHealth(), true);
+
+            setEnemyNameText(activeEnemy.getName());
+        }
         setRoomInfo(activeRoom.getID(), activeLevelNumber);
     }
 
@@ -143,6 +163,9 @@ public class MainScreenFragment extends Fragment {
                     case "Leave":
                         currentText = getResources().getStringArray(R.array.room_array);
                         actionText.setText(currentText[0]);
+                        return;
+                    case "Attack":
+                        attackEnemy(view);
                         return;
                     case "North":
                         if(checkNorth()){
@@ -170,30 +193,6 @@ public class MainScreenFragment extends Fragment {
                         return;
                     default:
                         return;
-                }
-                if(actionText.getText().equals("Leave")){
-                    currentText = getResources().getStringArray(R.array.room_array);
-                    actionText.setText(currentText[0]);
-                }
-                if(actionText.getText().equals("North")){
-                    currentText = getResources().getStringArray(R.array.main_array);
-                    checkNorth();
-                    actionText.setText(currentText[0]);
-                }
-                else if(actionText.getText().equals("South")){
-                    currentText = getResources().getStringArray(R.array.main_array);
-                    checkSouth();
-                    actionText.setText(currentText[0]);
-                }
-                else if(actionText.getText().equals("East")){
-                    currentText = getResources().getStringArray(R.array.main_array);
-                    checkEast();
-                    actionText.setText(currentText[0]);
-                }
-                else if(actionText.getText().equals("West")){
-                    currentText = getResources().getStringArray(R.array.main_array);
-                    checkWest();
-                    actionText.setText(currentText[0]);
                 }
             }
         });
@@ -304,11 +303,11 @@ public class MainScreenFragment extends Fragment {
         actionText.setText(label);
     }
 
-//    private void setEnemyHealthText(int text) {
-//        enemyHealthText.setText(String.valueOf(text));
-//    }
-//
-//    private void setEnemyNameText(String text) {
-//        enemyNameText.setText(text);
-//    }
+    private void setEnemyHealth(int text) {
+        enemyHealth.setProgress(text, true);
+    }
+
+    private void setEnemyNameText(String text) {
+        enemyNameText.setText(text);
+    }
 }

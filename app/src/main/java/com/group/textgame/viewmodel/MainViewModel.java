@@ -1,11 +1,11 @@
 package com.group.textgame.viewmodel;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.group.textgame.model.Enemy;
 import com.group.textgame.model.Player;
@@ -17,7 +17,7 @@ import com.group.textgame.domain.*;
 
 import java.util.List;
 
-public class MainViewModel extends AndroidViewModel {
+public class MainViewModel extends AndroidViewModel implements ViewModelProvider.Factory {
     private final RoomsRepository roomsRepo;
     private final CharacterRepository characterRepo;
     private final LevelRepository levelRepo;
@@ -27,14 +27,14 @@ public class MainViewModel extends AndroidViewModel {
     private MutableLiveData<Integer> _activePlayerHealth;
     private MutableLiveData<Integer> _activeEnemyHealth;
 
-    public MainViewModel(Application application) {
+    public MainViewModel(Application application, String[] roomNames, String[] initialText, String[] returnText) {
         super(application);
         roomsRepo = RoomsRepository.getInstance(application.getApplicationContext());
         characterRepo = CharacterRepository.getInstance(application.getApplicationContext());
         levelRepo = LevelRepository.getInstance(application.getApplicationContext());
 
         if (roomsRepo.getRooms().isEmpty()) {
-            SetupStarterData starterData = new SetupStarterData(characterRepo, roomsRepo, levelRepo);
+            LevelOne starterData = new LevelOne(characterRepo, roomsRepo, levelRepo, roomNames, initialText, returnText);
         }
 
         _activeRoom = new MutableLiveData<Rooms>();
@@ -51,9 +51,10 @@ public class MainViewModel extends AndroidViewModel {
 
         _activePlayerHealth.setValue(characterRepo.getActivePlayer().getHealth());
 
-        _activeEnemyHealth.setValue(getActiveRoomEnemy().getHealth());
-
-        _activeEnemy.setValue(getActiveRoomEnemy());
+        if(getActiveRoomEnemy() != null){
+            _activeEnemyHealth.setValue(getActiveRoomEnemy().getHealth());
+            _activeEnemy.setValue(getActiveRoomEnemy());
+        }
 
         _screen.setValue(1);
     }
