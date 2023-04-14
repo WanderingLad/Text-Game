@@ -62,6 +62,10 @@ public class CharacterRepository {
         return characterDao.getEnemy(roomId);
     }
 
+    public Enemy getRoomEnemy(long roomId) {
+        return characterDao.getRoomEnemy(roomId);
+    }
+
     public void updateEnemy(Enemy enemy) {
         characterDao.updateEnemy(enemy);
     }

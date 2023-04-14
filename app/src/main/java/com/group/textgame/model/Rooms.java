@@ -19,7 +19,7 @@ public class Rooms {
     private long ID;
 
     @NonNull
-    @ColumnInfo(name = "text")
+    @ColumnInfo(name = "name")
     private String roomName;
 
     @NonNull
@@ -29,6 +29,10 @@ public class Rooms {
     @NonNull
     @ColumnInfo(name = "return")
     private String returnText;
+
+    @NonNull
+    @ColumnInfo(name = "look")
+    private String lookText;
 
     @ColumnInfo(name = "north")
     private long northRoom;
@@ -54,17 +58,15 @@ public class Rooms {
     @ColumnInfo(name = "westText")
     private String westText;
 
-    @ColumnInfo(name = "enemy")
-    private long enemy;
-
     @ColumnInfo(name = "level")
     private long level;
 
     public Rooms() {}
-    public Rooms(@NonNull String text, @NonNull String initialText, @NonNull String returnText) {
+    public Rooms(@NonNull String text, @NonNull String initialText, @NonNull String returnText, @NonNull String lookText) {
         this.roomName = text;
         this.initialText = initialText;
         this.returnText = returnText;
+        this.lookText = lookText;
     }
 
     @NonNull
@@ -115,14 +117,6 @@ public class Rooms {
 
     public void setWestRoom(long westRoom) {
         this.westRoom = westRoom;
-    }
-
-    public long getEnemy() {
-        return enemy;
-    }
-
-    public void setEnemy(long enemy) {
-        this.enemy = enemy;
     }
 
     public long getLevel() {
@@ -181,6 +175,14 @@ public class Rooms {
 
     public void setWestText(String westText) {
         this.westText = westText;
+    }
+
+    public String getLookText() {
+        return lookText;
+    }
+
+    public void setLookText(String lookText) {
+        this.lookText = lookText;
     }
 }
 

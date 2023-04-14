@@ -14,8 +14,13 @@ import androidx.room.TypeConverters;
 @Entity
 public class Enemy extends Character {
 
-    public Enemy(String name) {
+    @NonNull
+    @ColumnInfo(name = "roomID")
+    protected long roomID;
+
+    public Enemy(String name, long roomID) {
         this.name = name;
+        this.roomID = roomID;
     }
 
     @NonNull
@@ -61,8 +66,14 @@ public class Enemy extends Character {
     }
 
     @Override
-    public void attackTarget(Enemy enemy) {
+    public void attackTarget(Enemy enemy) {}
 
+    public long getRoomID() {
+        return roomID;
+    }
+
+    public void setRoomID(long roomID) {
+        this.roomID = roomID;
     }
 }
 

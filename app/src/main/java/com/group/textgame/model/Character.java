@@ -8,9 +8,6 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.group.textgame.data.Armor;
-import com.group.textgame.data.MainHand;
-
 @Entity (tableName = "Characters")
 public abstract class Character {
 

@@ -27,14 +27,14 @@ public class MainViewModel extends AndroidViewModel implements ViewModelProvider
     private MutableLiveData<Integer> _activePlayerHealth;
     private MutableLiveData<Integer> _activeEnemyHealth;
 
-    public MainViewModel(Application application, String[] roomNames, String[] initialText, String[] returnText) {
+    public MainViewModel(Application application, String[] roomNames, String[] initialText, String[] returnText, String[] lookText) {
         super(application);
         roomsRepo = RoomsRepository.getInstance(application.getApplicationContext());
         characterRepo = CharacterRepository.getInstance(application.getApplicationContext());
         levelRepo = LevelRepository.getInstance(application.getApplicationContext());
 
         if (roomsRepo.getRooms().isEmpty()) {
-            LevelOne starterData = new LevelOne(characterRepo, roomsRepo, levelRepo, roomNames, initialText, returnText);
+            LevelOne starterData = new LevelOne(characterRepo, roomsRepo, levelRepo, roomNames, initialText, returnText, lookText);
         }
 
         _activeRoom = new MutableLiveData<Rooms>();
@@ -106,7 +106,7 @@ public class MainViewModel extends AndroidViewModel implements ViewModelProvider
     }
 
     public Enemy getActiveRoomEnemy() {
-        return characterRepo.getEnemy(getActiveRoom().getValue().getEnemy());
+        return characterRepo.getRoomEnemy(getActiveRoom().getValue().getID());
     }
 
     public void setActiveEnemy(Enemy enemy) {

@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
             controller = new Controller();
 
             mainViewModel = new ViewModelProvider(this, new MainViewModel(this.getApplication(), getResources().getStringArray(R.array.room_names),
-                    getResources().getStringArray(R.array.initial_text), getResources().getStringArray(R.array.return_text))).get(MainViewModel.class);
+                    getResources().getStringArray(R.array.initial_text), getResources().getStringArray(R.array.return_text), getResources().getStringArray(R.array.look_text))).get(MainViewModel.class);
 
             final Observer<Integer> screenObserver = new Observer<Integer>() {
                 @Override

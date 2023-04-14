@@ -69,4 +69,16 @@
         <item name="room_9">Room 9 Return</item>
         <item name="room_10">Room 10 Return</item>
     </string-array>
+    <string-array name="look_text">
+        <item name="room_1">Room 1 Look</item>
+        <item name="room_2">Room 2 Look</item>
+        <item name="room_3">Room 3 Look</item>
+        <item name="room_4">Room 4 Look</item>
+        <item name="room_5">Room 5 Look</item>
+        <item name="room_6">Room 6 Look</item>
+        <item name="room_7">Room 7 Look</item>
+        <item name="room_8">Room 8 Look</item>
+        <item name="room_9">Room 9 Look</item>
+        <item name="room_10">Room 10 Look</item>
+    </string-array>
 </resources>

@@ -15,15 +15,16 @@ public class LevelOne {
     private final CharacterRepository characterRepo;
     private final LevelRepository levelRepo;
 
-    private String[] roomNames, initialText, returnText;
+    private String[] roomNames, initialText, returnText, lookText;
 
-    public LevelOne(CharacterRepository characterRepo, RoomsRepository roomsRepo, LevelRepository levelRepo, String[] roomNames, String[] initialText, String[] returnText){
+    public LevelOne(CharacterRepository characterRepo, RoomsRepository roomsRepo, LevelRepository levelRepo, String[] roomNames, String[] initialText, String[] returnText, String[] lookText){
         this.characterRepo = characterRepo;
         this.roomsRepo = roomsRepo;
         this.levelRepo = levelRepo;
         this.initialText = initialText;
         this.returnText = returnText;
         this.roomNames = roomNames;
+        this.lookText = lookText;
 
         setupGrid();
     }
@@ -44,12 +45,10 @@ public class LevelOne {
         levelRepo.addLevel(level);
 
         for(int i =0; i < 10; i++){
-            Rooms room = new Rooms(roomNames[i], initialText[i], returnText[i]);
+            Rooms room = new Rooms(roomNames[i], initialText[i], returnText[i], lookText[i]);
         }
 
-        Rooms activeRoom = new Rooms;
-
-        activeRoom.
+        Rooms activeRoom = new Rooms();
 
 //        //Room 1
 //        Rooms room = new Rooms("Room 1");
