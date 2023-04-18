@@ -11,7 +11,7 @@ import androidx.room.TypeConverters;
 @Entity (tableName = "Characters")
 public abstract class Character {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id")
     protected long ID;
 

@@ -18,7 +18,8 @@ public class Enemy extends Character {
     @ColumnInfo(name = "roomID")
     protected long roomID;
 
-    public Enemy(String name, long roomID) {
+    public Enemy(@NonNull long ID, String name, long roomID) {
+        this.ID = ID;
         this.name = name;
         this.roomID = roomID;
     }

@@ -14,7 +14,7 @@ import java.util.List;
 @Entity(tableName = "Rooms")
 public class Rooms {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id")
     private long ID;
 
@@ -33,6 +33,10 @@ public class Rooms {
     @NonNull
     @ColumnInfo(name = "look")
     private String lookText;
+
+    @NonNull
+    @ColumnInfo(name = "entered")
+    private boolean enteredBool;
 
     @ColumnInfo(name = "north")
     private long northRoom;
@@ -62,11 +66,14 @@ public class Rooms {
     private long level;
 
     public Rooms() {}
-    public Rooms(@NonNull String text, @NonNull String initialText, @NonNull String returnText, @NonNull String lookText) {
+    public Rooms(@NonNull long ID, @NonNull String text, @NonNull String initialText, @NonNull String returnText, @NonNull String lookText, @NonNull long level, @NonNull boolean enteredBool) {
+        this.ID = ID;
         this.roomName = text;
         this.initialText = initialText;
         this.returnText = returnText;
         this.lookText = lookText;
+        this.level = level;
+        this.enteredBool = enteredBool;
     }
 
     @NonNull
@@ -183,6 +190,14 @@ public class Rooms {
 
     public void setLookText(String lookText) {
         this.lookText = lookText;
+    }
+
+    public boolean hasEnteredBool() {
+        return enteredBool;
+    }
+
+    public void setEnteredBool(boolean enteredBool) {
+        this.enteredBool = enteredBool;
     }
 }
 

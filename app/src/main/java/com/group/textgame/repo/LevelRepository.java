@@ -15,6 +15,7 @@ public class LevelRepository {
 
     private static LevelRepository levelRepo;
     private final LevelDao levelDao;
+    private final LevelDatabase database;
 
     private Level activeLevel;
 
@@ -26,11 +27,17 @@ public class LevelRepository {
     }
 
     private LevelRepository(Context context) {
-        LevelDatabase database = Room.databaseBuilder(context, LevelDatabase.class, "levels.db")
+        database = Room.databaseBuilder(context, LevelDatabase.class, "levels.db")
+                .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
 
         levelDao = database.levelDao();
+    }
+
+    public void resetData(){
+        database.clearAllTables();
+        database.close();
     }
 
     public void addLevel(Level level) {

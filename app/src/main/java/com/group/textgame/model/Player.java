@@ -11,7 +11,8 @@ import androidx.room.TypeConverters;
 @Entity
 public class Player extends Character {
 
-    public Player(String name) {
+    public Player(@NonNull long ID, String name) {
+        this.ID = ID;
         this.name = name;
     }
 

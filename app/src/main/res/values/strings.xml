@@ -11,13 +11,16 @@
     <string name="right_button">Right Button</string>
     <string name="add_text">Add Text</string>
     <string name="filler_text">Filler Text</string>
+    <string name="action">Go</string>
+    <string name="back">Back</string>
+
     <string-array name="main_array">
         <item>Move</item>
         <item>Look</item>
-        <item>Inventory</item>
         <item>Search</item>
         <item>Attack</item>
     </string-array>
+
     <string-array name="item_array">
         <item>Crate</item>
         <item>Pallet</item>
@@ -26,13 +29,14 @@
         <item>Room 2 Door</item>
         <item>Torch</item>
     </string-array>
-    <string name="action">Go</string>
+
     <string-array name="room_array">
         <item>North</item>
         <item>South</item>
         <item>East</item>
         <item>West</item>
     </string-array>
+
     <string-array name="room_names">
         <item name="room_1">Room 1</item>
         <item name="room_2">Room 2</item>
@@ -45,9 +49,10 @@
         <item name="room_9">Room 9</item>
         <item name="room_10">Room 10</item>
     </string-array>
+
     <string-array name="initial_text">
-        <item name="room_1">Room 1 Initial</item>
-        <item name="room_2">Room 2 Initial</item>
+        <item name="room_1">You awake in a dark stone room. The floor is uneven and rough.The faint glow of a torch shoots under the door in front of you from the room to the East. You can make out the shapes of a few boxes in the corner. Distant and through the door, you hear the faint sound of footsteps. It’s time to find a way out of here.</item>
+        <item name="room_2">You enter a stone room with a torch on the wall. There is another large wooden door to the South, this time with a small hole for a window near the top. To the East there are vertical iron bars in place of a wall, separating you from the next room. To the West, the door you just entered through.</item>
         <item name="room_3">Room 3 Initial</item>
         <item name="room_4">Room 4 Initial</item>
         <item name="room_5">Room 5 Initial</item>
@@ -57,6 +62,7 @@
         <item name="room_9">Room 9 Initial</item>
         <item name="room_10">Room 10 Initial</item>
     </string-array>
+
     <string-array name="return_text">
         <item name="room_1">Room 1 Return</item>
         <item name="room_2">Room 2 Return</item>
@@ -69,6 +75,20 @@
         <item name="room_9">Room 9 Return</item>
         <item name="room_10">Room 10 Return</item>
     </string-array>
+
+    <string-array name="move_text">
+        <item name="room_1">Room 1 Move</item>
+        <item name="room_2">Room 2 Move</item>
+        <item name="room_3">Room 3 Move</item>
+        <item name="room_4">Room 4 Move</item>
+        <item name="room_5">Room 5 Move</item>
+        <item name="room_6">Room 6 Move</item>
+        <item name="room_7">Room 7 Move</item>
+        <item name="room_8">Room 8 Move</item>
+        <item name="room_9">Room 9 Move</item>
+        <item name="room_10">Room 10 Move</item>
+    </string-array>
+
     <string-array name="look_text">
         <item name="room_1">Room 1 Look</item>
         <item name="room_2">Room 2 Look</item>

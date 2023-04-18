@@ -61,21 +61,23 @@
         android:layout_height="wrap_content">
 
 
-
         <ScrollView
             android:id="@+id/text_scroller"
             android:layout_width="fill_parent"
             android:layout_height="505dp"
             android:layout_gravity="bottom"
             android:background="@color/white"
+            android:clipToPadding="true"
+            android:fillViewport="false"
+            android:scrollbarStyle="insideInset"
             android:scrollbars="vertical"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:fadeScrollbars="false">
 
             <TextView
                 android:id="@+id/text_box"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/room_info"/>
+                android:layout_height="wrap_content"/>
         </ScrollView>
 
         <LinearLayout
@@ -149,13 +151,33 @@
             android:src="@drawable/right_arrow" />
     </GridLayout>
 
+    <GridLayout
+        android:id="@+id/buttonHolder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:orientation="horizontal"
+        android:backgroundTint="@color/black">
+
         <Button
-            android:id="@+id/action_button"
-            android:text="@string/action"
-            android:layout_width="match_parent"
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/white"
-            android:textColor="@color/black"/>
+            android:text="@string/back"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/white"
+            android:text="@string/action"
+            android:textColor="@color/black" />
+    </GridLayout>
 
 </LinearLayout>

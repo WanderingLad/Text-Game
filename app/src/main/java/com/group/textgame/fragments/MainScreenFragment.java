@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,9 @@ import com.group.textgame.model.Player;
 import com.group.textgame.model.Rooms;
 import com.group.textgame.viewmodel.MainViewModel;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class MainScreenFragment extends Fragment {
 
     private MainViewModel mainViewModel;
@@ -34,15 +38,15 @@ public class MainScreenFragment extends Fragment {
 
     private Enemy activeEnemy;
 
-    private TextView enemyHealthText, enemyNameText, roomInfo, textBox, actionText;
+    private TextView enemyNameText, roomInfo, textBox, actionText;
 
     private ProgressBar playerHealth, enemyHealth;
 
-    private Button actionButton, startButton;
+    private Button actionButton, backButton;
 
     private ImageButton right, left;
 
-    private String[] currentText;
+    private List<String> currentRoomItems, currentInventory, currentText, previousText;
 
     private LinearLayout enemyOverlay;
 
@@ -69,6 +73,7 @@ public class MainScreenFragment extends Fragment {
             public void onChanged(Rooms rooms) {
                 activeRoom = rooms;
                 setRoomInfo(activeRoom.getID(), activeLevelNumber);
+                currentRoomItems = mainViewModel.getRoomsItems();
             }
         };
 
@@ -129,9 +134,14 @@ public class MainScreenFragment extends Fragment {
         textBox = parentView.findViewById(R.id.text_box);
         actionText = parentView.findViewById(R.id.action_label);
 
-        currentText = getResources().getStringArray(R.array.main_array);
+        currentText = Arrays.asList(getResources().getStringArray(R.array.main_array));
+        previousText = Arrays.asList(getResources().getStringArray(R.array.main_array));
 
-        actionText.setText(currentText[0]);
+        currentRoomItems = mainViewModel.getRoomsItems();
+
+        currentInventory = mainViewModel.getInventory();
+
+        actionText.setText(currentText.get(0));
 
         playerHealth = parentView.findViewById(R.id.playerHealthBar);
 
@@ -147,6 +157,9 @@ public class MainScreenFragment extends Fragment {
             setEnemyNameText(activeEnemy.getName());
         }
         setRoomInfo(activeRoom.getID(), activeLevelNumber);
+
+        textBox.append(activeRoom.getInitialText() + "\n");
+        mainViewModel.setEnteredBool(true);
     }
 
     private void setButtons(View parentView){
@@ -156,43 +169,82 @@ public class MainScreenFragment extends Fragment {
 
         left = parentView.findViewById(R.id.left_button);
 
+        backButton = parentView.findViewById(R.id.back_button);
+
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch(actionText.getText().toString()){
-                    case "Leave":
-                        currentText = getResources().getStringArray(R.array.room_array);
-                        actionText.setText(currentText[0]);
-                        return;
-                    case "Attack":
-                        attackEnemy(view);
-                        return;
-                    case "North":
-                        if(checkNorth()){
-                            currentText = getResources().getStringArray(R.array.main_array);
-                            actionText.setText(currentText[0]);
-                        }
-                        return;
-                    case "South":
-                        if(checkSouth()){
-                            currentText = getResources().getStringArray(R.array.main_array);
-                            actionText.setText(currentText[0]);
-                        }
-                        break;
-                    case "East":
-                        if(checkEast()){
-                            currentText = getResources().getStringArray(R.array.main_array);
-                            actionText.setText(currentText[0]);
-                        }
-                        return;
-                    case "West":
-                        if(checkWest()){
-                            currentText = getResources().getStringArray(R.array.main_array);
-                            actionText.setText(currentText[0]);
-                        }
-                        return;
-                    default:
-                        return;
+
+                if(currentRoomItems.contains(actionText.getText().toString())){
+
+                    textBox.append("\n" + mainViewModel.getObject(currentRoomItems.indexOf(actionText.getText().toString()) + 1).getObjectText() + "\n");
+
+                    Log.d("Test", currentRoomItems.toString());
+
+                    currentText = Arrays.asList(getResources().getStringArray(R.array.main_array));
+                    actionText.setText(currentText.get(0));
+
+                    return;
+                }
+                else{
+
+                    switch(actionText.getText().toString()){
+                        case "Move":
+                            previousText = currentText;
+                            currentText = Arrays.asList(getResources().getStringArray(R.array.room_array));
+                            actionText.setText(currentText.get(0));
+                            return;
+                        case "Look":
+                            textBox.append("\n" + activeRoom.getLookText() + "\n");
+                            return;
+                        case "Search":
+                            previousText = currentText;
+                            currentText = currentRoomItems;
+                            actionText.setText(currentText.get(0));
+                            return;
+                        case "Inventory":
+                            if(currentInventory.size() != 0){
+                                previousText = currentText;
+                                currentText = currentInventory;
+                                actionText.setText(currentText.get(0));
+                            } else {
+                                textBox.append("\n" + "Your inventory is empty" + "\n");
+                            }
+                            return;
+                        case "Attack":
+                            attackEnemy(view);
+                            return;
+                        case "North":
+                            if(checkNorth()){
+                                previousText = currentText;
+                                currentText = Arrays.asList(getResources().getStringArray(R.array.main_array));
+                                actionText.setText(currentText.get(0));
+                            }
+                            return;
+                        case "South":
+                            if(checkSouth()){
+                                previousText = currentText;
+                                currentText = Arrays.asList(getResources().getStringArray(R.array.main_array));
+                                actionText.setText(currentText.get(0));
+                            }
+                            break;
+                        case "East":
+                            if(checkEast()){
+                                previousText = currentText;
+                                currentText = Arrays.asList(getResources().getStringArray(R.array.main_array));
+                                actionText.setText(currentText.get(0));
+                            }
+                            return;
+                        case "West":
+                            if(checkWest()){
+                                previousText = currentText;
+                                currentText = Arrays.asList(getResources().getStringArray(R.array.main_array));
+                                actionText.setText(currentText.get(0));
+                            }
+                            return;
+                        default:
+                            return;
+                    }
                 }
             }
         });
@@ -200,15 +252,15 @@ public class MainScreenFragment extends Fragment {
         right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(int i = 0; i < currentText.length; i++){
-                    if(i == currentText.length - 1 && actionText.getText().equals(currentText[i])){
-                        shiftRight(currentText[0]);
+                for(int i = 0; i < currentText.size(); i++){
+                    if(i == currentText.size() - 1 && actionText.getText().equals(currentText.get(i))){
+                        shiftRight(currentText.get(0));
                         return;
                     }
 
-                    else if(actionText.getText().equals(currentText[i]))
+                    else if(actionText.getText().equals(currentText.get(i)))
                     {
-                        shiftRight(currentText[i+1]);
+                        shiftRight(currentText.get(i + 1));
                         return;
                     }
                 }
@@ -218,26 +270,47 @@ public class MainScreenFragment extends Fragment {
         left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(int i = 0; i < currentText.length; i++){
-                    if(i == 0 && actionText.getText().equals(currentText[i])){
-                        shiftLeft(currentText[currentText.length - 1]);
+                for(int i = 0; i < currentText.size(); i++){
+                    if(i == 0 && actionText.getText().equals(currentText.get(i))){
+                        shiftLeft(currentText.get(currentText.size() - 1));
                         return;
                     }
 
-                    else if(actionText.getText().equals(currentText[i]))
+                    else if(actionText.getText().equals(currentText.get(i)))
                     {
-                        shiftLeft(currentText[i-1]);
+                        shiftLeft(currentText.get(i - 1));
                         return;
                     }
                 }
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentText = previousText;
+                actionText.setText(currentText.get(0));
             }
         });
     }
 
     private boolean checkNorth(){
         if(activeRoom.getNorthRoom() != 0){
-            mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getNorthRoom()));
-            mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+
+            if(mainViewModel.getRoom(activeRoom.getNorthRoom()).hasEnteredBool()){
+                mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getNorthRoom()));
+                mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+                textBox.append("\n" + activeRoom.getReturnText() + "\n");
+            }
+            else{
+                textBox.append("\n" + activeRoom.getNorthText() + "\n");
+
+                mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getNorthRoom()));
+                mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+
+                textBox.append("\n" + activeRoom.getInitialText() + "\n");
+                mainViewModel.setEnteredBool(true);
+            }
 
             return true;
         }
@@ -246,8 +319,21 @@ public class MainScreenFragment extends Fragment {
 
     private boolean checkSouth(){
         if(activeRoom.getSouthRoom() != 0){
-            mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getSouthRoom()));
-            mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+
+            if(mainViewModel.getRoom(activeRoom.getSouthRoom()).hasEnteredBool()){
+                mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getSouthRoom()));
+                mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+                textBox.append("\n" + activeRoom.getReturnText() + "\n");
+            }
+            else{
+                textBox.append("\n" + activeRoom.getSouthText() + "\n");
+
+                mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getSouthRoom()));
+                mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+
+                textBox.append("\n" + activeRoom.getInitialText() + "\n");
+                mainViewModel.setEnteredBool(true);
+            }
 
             return true;
         }
@@ -257,8 +343,23 @@ public class MainScreenFragment extends Fragment {
 
     private boolean checkEast(){
         if(activeRoom.getEastRoom() != 0){
-            mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getEastRoom()));
-            mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+
+            if(mainViewModel.getRoom(activeRoom.getEastRoom()).hasEnteredBool()){
+                mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getEastRoom()));
+                mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+
+                textBox.append("\n" + activeRoom.getReturnText() + "\n");
+            }
+            else{
+                textBox.append("\n" + activeRoom.getEastText() + "\n");
+
+                mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getEastRoom()));
+                mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+
+                textBox.append("\n" + activeRoom.getInitialText() + "\n");
+
+                mainViewModel.setEnteredBool(true);
+            }
 
             return true;
         }
@@ -268,8 +369,23 @@ public class MainScreenFragment extends Fragment {
 
     private boolean checkWest(){
         if(activeRoom.getWestRoom() != 0){
-            mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getWestRoom()));
-            mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+
+            if(mainViewModel.getRoom(activeRoom.getWestRoom()).hasEnteredBool()){
+                mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getWestRoom()));
+                mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+
+                textBox.append("\n" + activeRoom.getReturnText() + "\n");
+            }
+            else{
+                textBox.append("\n" + activeRoom.getWestText() + "\n");
+
+                mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getWestRoom()));
+                mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+
+                textBox.append("\n" + activeRoom.getInitialText() + "\n");
+
+                mainViewModel.setEnteredBool(true);
+            }
 
             return true;
         }

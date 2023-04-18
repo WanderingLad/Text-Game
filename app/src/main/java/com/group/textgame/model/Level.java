@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "Levels")
 public class Level {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id")
     private long ID;
 
@@ -18,7 +18,8 @@ public class Level {
 
     public Level() {}
 
-    public Level(@NonNull String text) {
+    public Level(@NonNull long ID, @NonNull String text) {
+        this.ID = ID;
         this.levelName = text;
     }
 
