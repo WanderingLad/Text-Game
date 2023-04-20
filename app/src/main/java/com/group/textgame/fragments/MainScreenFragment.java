@@ -238,8 +238,14 @@ public class MainScreenFragment extends Fragment {
 
                     switch(actionText.getText().toString()){
                         case "Move":
-                            if(activeEnemy != null && activeEnemy.getHealth() != 0){
-                                addText("There's no way out but fighting");
+                            if(activeEnemy != null){
+                                if(activeEnemy.getHealth() > 0){
+                                    addText("There's no way out but fighting");
+                                } else {
+                                    previousText = currentText;
+                                    currentText = Arrays.asList(getResources().getStringArray(R.array.room_array));
+                                    actionText.setText(currentText.get(0));
+                                }
                             } else {
                                 previousText = currentText;
                                 currentText = Arrays.asList(getResources().getStringArray(R.array.room_array));
