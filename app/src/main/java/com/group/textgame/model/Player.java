@@ -54,11 +54,11 @@ public class Player extends Character {
     }
 
     @Override
-    public void attackTarget(Player player) {}
+    public void attackTarget(Player player, int bonus) {}
 
     @Override
-    public void attackTarget(Enemy enemy) {
-        enemy.setHealth(enemy.getHealth() - getDamage());
+    public void attackTarget(Enemy enemy, int bonus) {
+        enemy.setHealth(enemy.getHealth() - (getDamage() + bonus));
     }
 }
 

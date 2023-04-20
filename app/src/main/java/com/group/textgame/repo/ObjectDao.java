@@ -17,7 +17,10 @@ public interface ObjectDao {
     Object getObject(long id);
 
     @Query("SELECT objectName FROM Objects WHERE parentName = :parentName ORDER BY id COLLATE NOCASE")
-    List<String> getObjects(String parentName);
+    List<String> getStringObjects(String parentName);
+
+    @Query("SELECT * FROM Objects WHERE parentName = :parentName ORDER BY id COLLATE NOCASE")
+    List<Object> getObjects(String parentName);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long addObject(Object object);

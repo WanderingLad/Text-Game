@@ -57,6 +57,7 @@
     </GridLayout>
 
     <FrameLayout
+        android:id="@+id/text_scroller_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -66,18 +67,20 @@
             android:layout_width="fill_parent"
             android:layout_height="505dp"
             android:layout_gravity="bottom"
-            android:background="@color/white"
+            android:background="@color/black"
             android:clipToPadding="true"
             android:fillViewport="false"
             android:scrollbarStyle="insideInset"
             android:scrollbars="vertical"
             android:visibility="visible"
-            android:fadeScrollbars="false">
+            android:scrollbarThumbVertical="@color/white">
 
             <TextView
                 android:id="@+id/text_box"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:textColor="@color/white"/>
         </ScrollView>
 
         <LinearLayout

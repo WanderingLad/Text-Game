@@ -24,10 +24,21 @@ public class EndGameFragment extends Fragment {
 
     private MainViewModel mainViewModel;
 
+    private Button quit;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View parentView = inflater.inflate(R.layout.end_screen, container, false);
 
         mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+
+        quit = parentView.findViewById(R.id.quit_game);
+
+        quit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
 
         return parentView;
     }

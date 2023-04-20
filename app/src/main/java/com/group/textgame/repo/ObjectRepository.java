@@ -47,7 +47,11 @@ public class ObjectRepository {
         return objectDao.getObject(objectId);
     }
 
-    public List<String> getObjects(String name) {
+    public List<String> getStringObjects(String name) {
+        return objectDao.getStringObjects(name);
+    }
+
+    public List<Object> getObjects(String name) {
         return objectDao.getObjects(name);
     }
 

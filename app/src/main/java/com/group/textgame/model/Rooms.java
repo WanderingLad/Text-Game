@@ -38,6 +38,23 @@ public class Rooms {
     @ColumnInfo(name = "entered")
     private boolean enteredBool;
 
+    public boolean isEndRoom() {
+        return endRoom;
+    }
+
+    public void setEndRoom(boolean endRoom) {
+        this.endRoom = endRoom;
+    }
+
+    @ColumnInfo(name = "endRoom")
+    private boolean endRoom;
+
+    @ColumnInfo(name = "locked")
+    private boolean lockedBool;
+
+    @ColumnInfo(name = "keyname")
+    private String keyname;
+
     @ColumnInfo(name = "north")
     private long northRoom;
 
@@ -74,6 +91,8 @@ public class Rooms {
         this.lookText = lookText;
         this.level = level;
         this.enteredBool = enteredBool;
+        this.lockedBool = false;
+        this.endRoom = false;
     }
 
     @NonNull
@@ -198,6 +217,22 @@ public class Rooms {
 
     public void setEnteredBool(boolean enteredBool) {
         this.enteredBool = enteredBool;
+    }
+
+    public boolean isLockedBool() {
+        return lockedBool;
+    }
+
+    public void setLockedBool(boolean lockedBool) {
+        this.lockedBool = lockedBool;
+    }
+
+    public String getKeyname() {
+        return keyname;
+    }
+
+    public void setKeyname(String keyname) {
+        this.keyname = keyname;
     }
 }
 

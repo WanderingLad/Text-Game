@@ -14,7 +14,6 @@ import com.group.textgame.repo.CharacterRepository;
 import com.group.textgame.repo.LevelRepository;
 import com.group.textgame.repo.ObjectRepository;
 import com.group.textgame.repo.RoomsRepository;
-import com.group.textgame.domain.*;
 
 import java.util.List;
 
@@ -136,12 +135,21 @@ public class MainViewModel extends AndroidViewModel {
         return objectRepo.getObject(id);
     }
 
-    public List<String> getRoomsItems(){
-        return objectRepo.getObjects(getActiveRoom().getValue().getRoomName());
+    public List<String> getRoomsObjectString(){
+        return objectRepo.getStringObjects(getActiveRoom().getValue().getRoomName());
+    }
+
+    public List<Object> getObjects(String name){
+        return objectRepo.getObjects(name);
     }
 
     public List<String> getInventory(){
-        return objectRepo.getObjects(getActivePlayer().getName());
+        return objectRepo.getStringObjects(getActivePlayer().getName());
+    }
+
+    public void changeParent(Object o, String name){
+        o.setParentName(name);
+        objectRepo.updateObject(o);
     }
 }
 

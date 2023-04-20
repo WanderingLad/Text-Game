@@ -42,8 +42,8 @@ public abstract class Character {
 
     public abstract void setDamage(int damage);
 
-    public abstract void attackTarget(Player player);
+    public abstract void attackTarget(Player player, int bonus);
 
-    public abstract void attackTarget(Enemy enemy);
+    public abstract void attackTarget(Enemy enemy, int bonus);
 }
 

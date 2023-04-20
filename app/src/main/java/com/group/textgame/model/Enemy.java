@@ -62,12 +62,12 @@ public class Enemy extends Character {
     }
 
     @Override
-    public void attackTarget(Player player) {
-        player.setHealth(player.getHealth() - getDamage());
+    public void attackTarget(Player player, int bonus) {
+        player.setHealth(player.getHealth() - (getDamage() + bonus));
     }
 
     @Override
-    public void attackTarget(Enemy enemy) {}
+    public void attackTarget(Enemy enemy, int bonus) {}
 
     public long getRoomID() {
         return roomID;
