@@ -25,8 +25,8 @@
 
     <string-array name="room_array">
         <item>North</item>
-        <item>South</item>
         <item>East</item>
+        <item>South</item>
         <item>West</item>
     </string-array>
 

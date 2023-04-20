@@ -113,7 +113,7 @@ public class LevelOne {
 
         enemy.setHealth(100);
 
-        enemy.setDamage(5);
+        enemy.setDamage(100);
 
         characterRepo.addEnemy(enemy);
 
@@ -245,10 +245,10 @@ public class LevelOne {
         activeRoom.setNorthRoom(11);
         activeRoom.setNorthText("You open the door, and step into the room to the North.");
 
-        object = new Object(9, "Small Brown Purse", activeRoom.getRoomName(), "A small chest that is covered in dust. It looks like it's been untouched for a long time. I wonder what's inside.");
+        object = new Object(9, "Small Brown Purse", activeRoom.getRoomName(), "A small brown purse lays in the rubble. It doesn't look like it's been there long enough to gather dust, the owner must've left in a rush.");
         objectRepo.addObject(object);
 
-        object = new Object(10, "West Key", "Small Brown Purse", "It's a small golden key. You don't think someone did a good job faking that it was gold, since the black underside is showing through.");
+        object = new Object(10, "West Key", "Small Brown Purse", "The silver key shines back at you through the torchlight. You can almost see your reflection, not that you'd really want to.");
         objectRepo.addObject(object);
 
         object = new Object(25, "Workshop Tools", activeRoom.getRoomName(), "You think this might be useful to someone, but not to you. They look recently used, so maybe you weren't alone here.");
@@ -270,10 +270,10 @@ public class LevelOne {
         activeRoom.setLockedBool(true);
         activeRoom.setKeyname("West Key");
 
-        object = new Object(11, "Large Grey Chest", activeRoom.getRoomName(), "A small chest that is covered in dust. It looks like it's been untouched for a long time. I wonder what's inside.");
+        object = new Object(11, "Large Grey Chest", activeRoom.getRoomName(), "A large grey chest sits in the middle of the room. It's almost an ominous figure based on there being nothing else in here. Who would put it there?");
         objectRepo.addObject(object);
 
-        object = new Object(12, "Short Sword", "Large Grey Chest", "It's a small golden key. You don't think someone did a good job faking that it was gold, since the black underside is showing through.");
+        object = new Object(12, "Short Sword", "Large Grey Chest", "A short sword? Why on earth would this be here? You question the validity of its existence, but at this point you really can't complain. It looks formidable enough.");
         objectRepo.addObject(object);
 
         object = new Object(27, "Sketchy Bread", "Large Grey Chest", "This loaf of bread isn't the best looking... But who are you to judge at this point?");
@@ -308,10 +308,10 @@ public class LevelOne {
         activeRoom.setNorthRoom(13);
         activeRoom.setNorthText("You open the door, and step into the room to the North.");
 
-        object = new Object(13, "Small Brown Shield", activeRoom.getRoomName(), "A small chest that is covered in dust. It looks like it's been untouched for a long time. I wonder what's inside.");
+        object = new Object(13, "Small Brown Shield", activeRoom.getRoomName(), "The shield of the knight lays mostly in tact. Outside of the obvious battlemarks it looks pretty well upkept.");
         objectRepo.addObject(object);
 
-        object = new Object(14, "Shield", "Small Brown Shield", "It's a small golden key. You don't think someone did a good job faking that it was gold, since the black underside is showing through.");
+        object = new Object(14, "Shield", "Small Brown Shield", "Not huge, but it's more protection than you already have on. If it were to rain it wouldn't cover you that well. But then again, why is it raining in here?");
         objectRepo.addObject(object);
 
         object = new Object(29, "Suit of Armor", activeRoom.getRoomName(), "A couple years ago, this would've been a great museum piece. Now your only concern is to not end up like it. Left in the corner to rust.");
@@ -324,7 +324,7 @@ public class LevelOne {
 
         activeRoom = roomsRepo.getActiveRoom();
 
-        activeRoom.setNorthRoom(13);
+        activeRoom.setNorthRoom(14);
         activeRoom.setNorthText("You open the door, and step into the room to the North.");
 
         activeRoom.setSouthRoom(12);
@@ -341,7 +341,7 @@ public class LevelOne {
         roomsRepo.updateRoom(activeRoom);
 
         //Room End
-        roomsRepo.setActiveRoom(roomsRepo.getRoom(13));
+        roomsRepo.setActiveRoom(roomsRepo.getRoom(14));
 
         activeRoom = roomsRepo.getActiveRoom();
 
