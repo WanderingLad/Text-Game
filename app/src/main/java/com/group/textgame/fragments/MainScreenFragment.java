@@ -264,7 +264,7 @@ public class MainScreenFragment extends Fragment {
                             }
                             return;
                         case "Attack":
-                            if(activeEnemy == null){
+                            if(activeEnemy == null || activeEnemy.getHealth() <= 0){
                                 addText("There's nothing to attack.");
                             } else if(activeEnemy.getHealth() > 0){
                                 addText("You attack");
@@ -518,16 +518,14 @@ public class MainScreenFragment extends Fragment {
     }
 
     public void attackEnemy(View view){
-        if(activeEnemy.getHealth() >= activePlayer.getDamage()){
-            if(currentInventory.contains("Rusty Knife")){
-                activePlayer.attackTarget(activeEnemy, 2);
-            } else if(currentInventory.contains("Short Sword")){
+            if(currentInventory.contains("Short Sword")){
                 activePlayer.attackTarget(activeEnemy, 4);
+            } else if(currentInventory.contains("Rusty Knife")){
+                activePlayer.attackTarget(activeEnemy, 2);
             } else {
                 activePlayer.attackTarget(activeEnemy, 0);
             }
             mainViewModel.setEnemyHealth();
-        }
     }
 
     public void attackPlayer(View view){
