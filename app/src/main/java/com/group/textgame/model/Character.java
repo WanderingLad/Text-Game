@@ -8,13 +8,10 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
-import com.group.textgame.data.Armor;
-import com.group.textgame.data.MainHand;
-
 @Entity (tableName = "Characters")
 public abstract class Character {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id")
     protected long ID;
 
@@ -45,8 +42,8 @@ public abstract class Character {
 
     public abstract void setDamage(int damage);
 
-    public abstract void attackTarget(Player player);
+    public abstract void attackTarget(Player player, int bonus);
 
-    public abstract void attackTarget(Enemy enemy);
+    public abstract void attackTarget(Enemy enemy, int bonus);
 }
 

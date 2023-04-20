@@ -14,12 +14,12 @@ import java.util.List;
 @Entity(tableName = "Rooms")
 public class Rooms {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     @ColumnInfo(name = "id")
     private long ID;
 
     @NonNull
-    @ColumnInfo(name = "text")
+    @ColumnInfo(name = "name")
     private String roomName;
 
     @NonNull
@@ -29,6 +29,31 @@ public class Rooms {
     @NonNull
     @ColumnInfo(name = "return")
     private String returnText;
+
+    @NonNull
+    @ColumnInfo(name = "look")
+    private String lookText;
+
+    @NonNull
+    @ColumnInfo(name = "entered")
+    private boolean enteredBool;
+
+    public boolean isEndRoom() {
+        return endRoom;
+    }
+
+    public void setEndRoom(boolean endRoom) {
+        this.endRoom = endRoom;
+    }
+
+    @ColumnInfo(name = "endRoom")
+    private boolean endRoom;
+
+    @ColumnInfo(name = "locked")
+    private boolean lockedBool;
+
+    @ColumnInfo(name = "keyname")
+    private String keyname;
 
     @ColumnInfo(name = "north")
     private long northRoom;
@@ -54,17 +79,20 @@ public class Rooms {
     @ColumnInfo(name = "westText")
     private String westText;
 
-    @ColumnInfo(name = "enemy")
-    private long enemy;
-
     @ColumnInfo(name = "level")
     private long level;
 
     public Rooms() {}
-    public Rooms(@NonNull String text, @NonNull String initialText, @NonNull String returnText) {
+    public Rooms(@NonNull long ID, @NonNull String text, @NonNull String initialText, @NonNull String returnText, @NonNull String lookText, @NonNull long level, @NonNull boolean enteredBool) {
+        this.ID = ID;
         this.roomName = text;
         this.initialText = initialText;
         this.returnText = returnText;
+        this.lookText = lookText;
+        this.level = level;
+        this.enteredBool = enteredBool;
+        this.lockedBool = false;
+        this.endRoom = false;
     }
 
     @NonNull
@@ -115,14 +143,6 @@ public class Rooms {
 
     public void setWestRoom(long westRoom) {
         this.westRoom = westRoom;
-    }
-
-    public long getEnemy() {
-        return enemy;
-    }
-
-    public void setEnemy(long enemy) {
-        this.enemy = enemy;
     }
 
     public long getLevel() {
@@ -181,6 +201,38 @@ public class Rooms {
 
     public void setWestText(String westText) {
         this.westText = westText;
+    }
+
+    public String getLookText() {
+        return lookText;
+    }
+
+    public void setLookText(String lookText) {
+        this.lookText = lookText;
+    }
+
+    public boolean hasEnteredBool() {
+        return enteredBool;
+    }
+
+    public void setEnteredBool(boolean enteredBool) {
+        this.enteredBool = enteredBool;
+    }
+
+    public boolean isLockedBool() {
+        return lockedBool;
+    }
+
+    public void setLockedBool(boolean lockedBool) {
+        this.lockedBool = lockedBool;
+    }
+
+    public String getKeyname() {
+        return keyname;
+    }
+
+    public void setKeyname(String keyname) {
+        this.keyname = keyname;
     }
 }
 

@@ -11,6 +11,29 @@ import androidx.room.TypeConverters;
 @Entity (tableName = "Objects")
 public class Object {
 
+
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = "id")
+    protected long ID;
+
+    @NonNull
+    @ColumnInfo(name = "objectName")
+    protected String name;
+
+    @NonNull
+    @ColumnInfo(name = "parentName")
+    protected String parentName;
+
+    @ColumnInfo(name = "objectText")
+    protected String objectText;
+
+    public Object(@NonNull long ID, @NonNull String name, String parentName, String objectText){
+        this.ID = ID;
+        this.name = name;
+        this.parentName = parentName;
+        this.objectText = objectText;
+    }
+
     public long getID() {
         return ID;
     }
@@ -45,19 +68,5 @@ public class Object {
         this.objectText = objectText;
     }
 
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    protected long ID;
-
-    @NonNull
-    @ColumnInfo(name = "objectName")
-    protected String name;
-
-    @NonNull
-    @ColumnInfo(name = "parentName")
-    protected String parentName;
-
-    @ColumnInfo(name = "objectText")
-    protected String objectText;
 }
 

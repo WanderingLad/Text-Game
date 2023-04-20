@@ -15,6 +15,8 @@ public class ObjectRepository {
     private static ObjectRepository objectRepo;
     private final ObjectDao objectDao;
 
+    private final ObjectDatabase database;
+
     public static ObjectRepository getInstance(Context context) {
         if (objectRepo == null) {
             objectRepo = new ObjectRepository(context);
@@ -23,11 +25,17 @@ public class ObjectRepository {
     }
 
     private ObjectRepository(Context context) {
-        ObjectDatabase database = Room.databaseBuilder(context, ObjectDatabase.class, "objects.db")
+        database = Room.databaseBuilder(context, ObjectDatabase.class, "objects.db")
+                .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
 
         objectDao = database.objectDao();
+    }
+
+    public void resetData(){
+        database.clearAllTables();
+        database.close();
     }
 
     public void addObject(Object object) {
@@ -37,6 +45,10 @@ public class ObjectRepository {
 
     public Object getObject(long objectId) {
         return objectDao.getObject(objectId);
+    }
+
+    public List<String> getStringObjects(String name) {
+        return objectDao.getStringObjects(name);
     }
 
     public List<Object> getObjects(String name) {

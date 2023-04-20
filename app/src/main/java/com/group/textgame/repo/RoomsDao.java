@@ -19,21 +19,6 @@ public interface RoomsDao {
     @Query("SELECT * FROM Rooms WHERE level = :level ORDER BY id COLLATE NOCASE")
     List<Rooms> getRooms(long level);
 
-    @Query("SELECT north FROM Rooms WHERE id = :id")
-    long getNorthRoom(long id);
-
-    @Query("SELECT south FROM Rooms WHERE id = :id")
-    long getSouthRoom(long id);
-
-    @Query("SELECT east FROM Rooms WHERE id = :id")
-    long getEastRoom(long id);
-
-    @Query("SELECT west FROM Rooms WHERE id = :id")
-    long getWestRoom(long id);
-
-    @Query("SELECT enemy FROM Rooms WHERE id = :id")
-    long getEnemy(long id);
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long addRoom(Rooms room);
 

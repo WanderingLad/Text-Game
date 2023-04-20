@@ -16,6 +16,9 @@ public interface ObjectDao {
     @Query("SELECT *  FROM Objects WHERE id = :id" )
     Object getObject(long id);
 
+    @Query("SELECT objectName FROM Objects WHERE parentName = :parentName ORDER BY id COLLATE NOCASE")
+    List<String> getStringObjects(String parentName);
+
     @Query("SELECT * FROM Objects WHERE parentName = :parentName ORDER BY id COLLATE NOCASE")
     List<Object> getObjects(String parentName);
 

@@ -17,6 +17,8 @@ public class CharacterRepository {
 
     private final CharacterDao characterDao;
 
+    private final CharacterDatabase database;
+
     private Player activePlayer;
 
     public static CharacterRepository getInstance(Context context) {
@@ -27,11 +29,17 @@ public class CharacterRepository {
     }
 
     private CharacterRepository(Context context) {
-        CharacterDatabase database = Room.databaseBuilder(context, CharacterDatabase.class, "characters.db")
+        database = Room.databaseBuilder(context, CharacterDatabase.class, "characters.db")
+                .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
 
         characterDao = database.characterDao();
+    }
+
+    public void resetData(){
+        database.clearAllTables();
+        database.close();
     }
 
     public void addPlayer(Player player) {
@@ -60,6 +68,10 @@ public class CharacterRepository {
 
     public Enemy getEnemy(long roomId) {
         return characterDao.getEnemy(roomId);
+    }
+
+    public Enemy getRoomEnemy(long roomId) {
+        return characterDao.getRoomEnemy(roomId);
     }
 
     public void updateEnemy(Enemy enemy) {

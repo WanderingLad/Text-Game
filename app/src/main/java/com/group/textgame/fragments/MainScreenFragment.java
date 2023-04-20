@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,9 +19,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.group.textgame.R;
 import com.group.textgame.model.Enemy;
+import com.group.textgame.model.Object;
 import com.group.textgame.model.Player;
 import com.group.textgame.model.Rooms;
 import com.group.textgame.viewmodel.MainViewModel;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class MainScreenFragment extends Fragment {
 
@@ -34,17 +39,19 @@ public class MainScreenFragment extends Fragment {
 
     private Enemy activeEnemy;
 
-    private TextView enemyHealthText, enemyNameText, roomInfo, textBox, actionText;
+    private TextView enemyNameText, roomInfo, textBox, actionText;
 
     private ProgressBar playerHealth, enemyHealth;
 
-    private Button actionButton, startButton;
+    private Button actionButton, backButton;
 
     private ImageButton right, left;
 
-    private String[] currentText;
+    private List<String> currentRoomItems, currentInventory, currentText, previousText;
 
     private LinearLayout enemyOverlay;
+
+    private ScrollView scrollView;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View parentView = inflater.inflate(R.layout.main_screen, container, false);
@@ -69,6 +76,7 @@ public class MainScreenFragment extends Fragment {
             public void onChanged(Rooms rooms) {
                 activeRoom = rooms;
                 setRoomInfo(activeRoom.getID(), activeLevelNumber);
+                currentRoomItems = mainViewModel.getRoomsObjectString();
             }
         };
 
@@ -83,7 +91,7 @@ public class MainScreenFragment extends Fragment {
             @Override
             public void onChanged(Enemy enemy) {
                 activeEnemy = enemy;
-                if(activeEnemy != null){
+                if(activeEnemy != null && activeEnemy.getHealth() > 0){
                     setEnemyNameText(activeEnemy.getName());
                     setEnemyHealth(activeEnemy.getHealth());
                     enemyOverlay.setVisibility(View.VISIBLE);
@@ -100,8 +108,9 @@ public class MainScreenFragment extends Fragment {
             @Override
             public void onChanged(Integer health) {
                 setEnemyHealth(activeEnemy.getHealth());
-                if(activeEnemy.getHealth() == 0){
+                if(activeEnemy.getHealth() <= 0){
                     enemyOverlay.setVisibility(View.INVISIBLE);
+                    addText("You have slain the " + activeEnemy.getName());
                 }
             }
         };
@@ -129,9 +138,14 @@ public class MainScreenFragment extends Fragment {
         textBox = parentView.findViewById(R.id.text_box);
         actionText = parentView.findViewById(R.id.action_label);
 
-        currentText = getResources().getStringArray(R.array.main_array);
+        currentText = Arrays.asList(getResources().getStringArray(R.array.main_array));
+        previousText = Arrays.asList(getResources().getStringArray(R.array.main_array));
 
-        actionText.setText(currentText[0]);
+        currentRoomItems = mainViewModel.getRoomsObjectString();
+
+        currentInventory = mainViewModel.getInventory();
+
+        actionText.setText(currentText.get(0));
 
         playerHealth = parentView.findViewById(R.id.playerHealthBar);
 
@@ -141,12 +155,17 @@ public class MainScreenFragment extends Fragment {
 
         enemyOverlay = parentView.findViewById(R.id.enemy_overlay);
 
+        scrollView = parentView.findViewById(R.id.text_scroller);
+
         if (activeEnemy != null) {
             enemyHealth.setProgress(activeEnemy.getHealth(), true);
 
             setEnemyNameText(activeEnemy.getName());
         }
         setRoomInfo(activeRoom.getID(), activeLevelNumber);
+
+        addText(activeRoom.getInitialText());
+        mainViewModel.setEnteredBool(true);
     }
 
     private void setButtons(View parentView){
@@ -156,43 +175,139 @@ public class MainScreenFragment extends Fragment {
 
         left = parentView.findViewById(R.id.left_button);
 
+        backButton = parentView.findViewById(R.id.back_button);
+
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch(actionText.getText().toString()){
-                    case "Leave":
-                        currentText = getResources().getStringArray(R.array.room_array);
-                        actionText.setText(currentText[0]);
-                        return;
-                    case "Attack":
-                        attackEnemy(view);
-                        return;
-                    case "North":
-                        if(checkNorth()){
-                            currentText = getResources().getStringArray(R.array.main_array);
-                            actionText.setText(currentText[0]);
+
+                if(currentRoomItems.contains(actionText.getText().toString())){
+
+                    List<Object> x = mainViewModel.getObjects(activeRoom.getRoomName());
+
+                    for(Object o : x){
+                        if(o.getName().equals(actionText.getText())){
+                            addText(o.getObjectText());
+
+                            if(mainViewModel.getObjects(o.getName()) != null){
+                                for(Object a : mainViewModel.getObjects(o.getName())){
+
+                                    if(!currentInventory.contains(a.getName())){
+                                        addText("You got a " + a.getName() + " from the " + o.getName());
+
+                                        mainViewModel.changeParent(a, "player");
+
+                                        currentInventory = mainViewModel.getInventory();
+                                    } else {
+                                        addText("You already got a " + a.getName() + " from the " + o.getName());
+                                    }
+                                }
+                            }
                         }
-                        return;
-                    case "South":
-                        if(checkSouth()){
-                            currentText = getResources().getStringArray(R.array.main_array);
-                            actionText.setText(currentText[0]);
+                    }
+
+                    currentText = Arrays.asList(getResources().getStringArray(R.array.main_array));
+                    actionText.setText(currentText.get(0));
+
+                    return;
+                } else if(currentInventory.contains(actionText.getText())){
+
+                    List<Object> x = mainViewModel.getObjects(activePlayer.getName());
+
+                    for(Object o : x){
+                        if(o.getName().equals(actionText.getText())){
+                            addText(o.getObjectText());
                         }
-                        break;
-                    case "East":
-                        if(checkEast()){
-                            currentText = getResources().getStringArray(R.array.main_array);
-                            actionText.setText(currentText[0]);
+                        if(o.getName().contains("Bread")){
+                            if(activePlayer.getHealth() < 100){
+                                addText("You eat the " + o.getName());
+                                activePlayer.setHealth(100);
+                                mainViewModel.setPlayerHealth();
+                                mainViewModel.changeParent(o, "Nothing");
+                                currentInventory = mainViewModel.getInventory();
+                            }
                         }
-                        return;
-                    case "West":
-                        if(checkWest()){
-                            currentText = getResources().getStringArray(R.array.main_array);
-                            actionText.setText(currentText[0]);
-                        }
-                        return;
-                    default:
-                        return;
+                    }
+
+                    currentText = Arrays.asList(getResources().getStringArray(R.array.main_array));
+                    actionText.setText(currentText.get(0));
+
+                    return;
+                }
+                else{
+
+                    switch(actionText.getText().toString()){
+                        case "Move":
+                            if(activeEnemy != null && activeEnemy.getHealth() != 0){
+                                addText("There's no way out but fighting");
+                            } else {
+                                previousText = currentText;
+                                currentText = Arrays.asList(getResources().getStringArray(R.array.room_array));
+                                actionText.setText(currentText.get(0));
+                            }
+                            return;
+                        case "Look":
+                            addText(activeRoom.getLookText());
+                            return;
+                        case "Search":
+                            previousText = currentText;
+                            currentText = currentRoomItems;
+                            actionText.setText(currentText.get(0));
+                            return;
+                        case "Inventory":
+                            if(currentInventory.size() != 0){
+                                previousText = currentText;
+                                currentText = currentInventory;
+                                actionText.setText(currentText.get(0));
+                            } else {
+                                addText("Your inventory is empty");
+                            }
+                            return;
+                        case "Attack":
+                            if(activeEnemy == null){
+                                addText("There's nothing to attack.");
+                            } else if(activeEnemy.getHealth() > 0){
+                                addText("You attack");
+                                attackEnemy(view);
+                                if(activeEnemy.getHealth() > 0){
+                                    addText("The " + activeEnemy.getName() + " attacks");
+                                    attackPlayer(view);
+                                }
+                            } else {
+                                addText("You've slain the " + activeEnemy.getName());
+                            }
+                            return;
+                        case "North":
+                            if(checkNorth()){
+                                previousText = currentText;
+                                currentText = Arrays.asList(getResources().getStringArray(R.array.main_array));
+                                actionText.setText(currentText.get(0));
+                            }
+                            return;
+                        case "South":
+                            if(checkSouth()){
+                                previousText = currentText;
+                                currentText = Arrays.asList(getResources().getStringArray(R.array.main_array));
+                                actionText.setText(currentText.get(0));
+                            }
+                            break;
+                        case "East":
+                            if(checkEast()){
+                                previousText = currentText;
+                                currentText = Arrays.asList(getResources().getStringArray(R.array.main_array));
+                                actionText.setText(currentText.get(0));
+                            }
+                            return;
+                        case "West":
+                            if(checkWest()){
+                                previousText = currentText;
+                                currentText = Arrays.asList(getResources().getStringArray(R.array.main_array));
+                                actionText.setText(currentText.get(0));
+                            }
+                            return;
+                        default:
+                            return;
+                    }
                 }
             }
         });
@@ -200,15 +315,15 @@ public class MainScreenFragment extends Fragment {
         right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(int i = 0; i < currentText.length; i++){
-                    if(i == currentText.length - 1 && actionText.getText().equals(currentText[i])){
-                        shiftRight(currentText[0]);
+                for(int i = 0; i < currentText.size(); i++){
+                    if(i == currentText.size() - 1 && actionText.getText().equals(currentText.get(i))){
+                        shiftRight(currentText.get(0));
                         return;
                     }
 
-                    else if(actionText.getText().equals(currentText[i]))
+                    else if(actionText.getText().equals(currentText.get(i)))
                     {
-                        shiftRight(currentText[i+1]);
+                        shiftRight(currentText.get(i + 1));
                         return;
                     }
                 }
@@ -218,76 +333,213 @@ public class MainScreenFragment extends Fragment {
         left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(int i = 0; i < currentText.length; i++){
-                    if(i == 0 && actionText.getText().equals(currentText[i])){
-                        shiftLeft(currentText[currentText.length - 1]);
+                for(int i = 0; i < currentText.size(); i++){
+                    if(i == 0 && actionText.getText().equals(currentText.get(i))){
+                        shiftLeft(currentText.get(currentText.size() - 1));
                         return;
                     }
 
-                    else if(actionText.getText().equals(currentText[i]))
+                    else if(actionText.getText().equals(currentText.get(i)))
                     {
-                        shiftLeft(currentText[i-1]);
+                        shiftLeft(currentText.get(i - 1));
                         return;
                     }
                 }
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentText = previousText;
+                actionText.setText(currentText.get(0));
             }
         });
     }
 
     private boolean checkNorth(){
         if(activeRoom.getNorthRoom() != 0){
-            mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getNorthRoom()));
-            mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+
+            if(mainViewModel.getRoom(activeRoom.getNorthRoom()).isLockedBool() && !currentInventory.contains(mainViewModel.getRoom(activeRoom.getNorthRoom()).getKeyname())){
+                addText("This room is locked, you'll have to find a key.");
+                return false;
+            }
+
+            if(mainViewModel.getRoom(activeRoom.getNorthRoom()).hasEnteredBool()){
+                mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getNorthRoom()));
+                mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+                addText(activeRoom.getReturnText());
+            } else{
+                addText(activeRoom.getNorthText());
+
+                mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getNorthRoom()));
+                mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+
+                if(activeRoom.isEndRoom()){
+                    mainViewModel.setActiveScreen(-1);
+                }
+
+                addText(activeRoom.getInitialText());
+
+                mainViewModel.setEnteredBool(true);
+            }
+
+            return true;
+        } else if(activeRoom.getNorthText() != null){
+            addText(activeRoom.getNorthText());
 
             return true;
         }
+
+        addText("You can't go that way.");
         return false;
     }
 
     private boolean checkSouth(){
         if(activeRoom.getSouthRoom() != 0){
-            mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getSouthRoom()));
-            mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+
+            if(mainViewModel.getRoom(activeRoom.getSouthRoom()).isLockedBool() && !currentInventory.contains(mainViewModel.getRoom(activeRoom.getSouthRoom()).getKeyname())){
+                addText("This room is locked, you'll have to find a key.");
+                return false;
+            }
+
+            if(mainViewModel.getRoom(activeRoom.getSouthRoom()).hasEnteredBool()){
+                mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getSouthRoom()));
+                mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+                addText(activeRoom.getReturnText());
+            }
+            else{
+                addText(activeRoom.getSouthText());
+
+                mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getSouthRoom()));
+                mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+
+                if(activeRoom.isEndRoom()){
+                    mainViewModel.setActiveScreen(-1);
+                }
+
+                addText(activeRoom.getInitialText());
+                mainViewModel.setEnteredBool(true);
+            }
+
+            return true;
+        } else if(activeRoom.getSouthText() != null){
+
+            addText(activeRoom.getSouthText());
 
             return true;
         }
-
+        addText("You can't go that way.");
         return false;
     }
 
     private boolean checkEast(){
         if(activeRoom.getEastRoom() != 0){
-            mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getEastRoom()));
-            mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+
+            if(mainViewModel.getRoom(activeRoom.getEastRoom()).isLockedBool() && !currentInventory.contains(mainViewModel.getRoom(activeRoom.getEastRoom()).getKeyname())){
+                addText("This room is locked, you'll have to find a key.");
+                return false;
+            }
+
+            if(mainViewModel.getRoom(activeRoom.getEastRoom()).hasEnteredBool()){
+                mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getEastRoom()));
+                mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+
+                addText(activeRoom.getReturnText());
+            }
+            else{
+                addText(activeRoom.getEastText());
+
+                mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getEastRoom()));
+                mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+
+                if(activeRoom.isEndRoom()){
+                    mainViewModel.setActiveScreen(-1);
+                }
+
+                addText(activeRoom.getInitialText());
+
+                mainViewModel.setEnteredBool(true);
+            }
+
+            return true;
+        } else if(activeRoom.getEastText() != null){
+
+            addText(activeRoom.getEastText());
 
             return true;
         }
+
+        addText("You can't go that way.");
 
         return false;
     }
 
     private boolean checkWest(){
         if(activeRoom.getWestRoom() != 0){
-            mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getWestRoom()));
-            mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+
+            if(mainViewModel.getRoom(activeRoom.getWestRoom()).isLockedBool() && !currentInventory.contains(mainViewModel.getRoom(activeRoom.getWestRoom()).getKeyname())){
+                addText("This room is locked, you'll have to find a key.");
+                return false;
+            }
+
+            if(mainViewModel.getRoom(activeRoom.getWestRoom()).hasEnteredBool()){
+                mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getWestRoom()));
+                mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+
+                addText(activeRoom.getReturnText());
+            }
+            else{
+                addText(activeRoom.getWestText());
+
+                mainViewModel.setActiveRoom(mainViewModel.getRoom(activeRoom.getWestRoom()));
+                mainViewModel.setActiveEnemy(mainViewModel.getActiveRoomEnemy());
+
+                if(activeRoom.isEndRoom()){
+                    mainViewModel.setActiveScreen(-1);
+                }
+
+                addText(activeRoom.getInitialText());
+
+                mainViewModel.setEnteredBool(true);
+            }
+
+            return true;
+        } else if(activeRoom.getWestText() != null){
+
+            addText(activeRoom.getWestText());
 
             return true;
         }
+
+        addText("You can't go that way.");
 
         return false;
     }
 
     public void attackEnemy(View view){
         if(activeEnemy.getHealth() >= activePlayer.getDamage()){
-            activePlayer.attackTarget(activeEnemy);
+            if(currentInventory.contains("Rusty Knife")){
+                activePlayer.attackTarget(activeEnemy, 2);
+            } else if(currentInventory.contains("Short Sword")){
+                activePlayer.attackTarget(activeEnemy, 4);
+            } else {
+                activePlayer.attackTarget(activeEnemy, 0);
+            }
             mainViewModel.setEnemyHealth();
         }
     }
 
     public void attackPlayer(View view){
         if(activePlayer.getHealth() >= activeEnemy.getDamage()){
-            activeEnemy.attackTarget(activePlayer);
+            if(currentInventory.contains("Shield")){
+                activeEnemy.attackTarget(activePlayer, -2);
+            } else {
+                activeEnemy.attackTarget(activePlayer, 0);
+            }
             mainViewModel.setPlayerHealth();
+        } else {
+            mainViewModel.setActiveScreen(-1);
         }
     }
 
@@ -309,5 +561,16 @@ public class MainScreenFragment extends Fragment {
 
     private void setEnemyNameText(String text) {
         enemyNameText.setText(text);
+    }
+
+    private void addText(String text){
+        textBox.append("\n" + text + "\n");
+        scrollView.post(new Runnable()
+        {
+            public void run()
+            {
+                scrollView.fullScroll(View.FOCUS_DOWN);
+            }
+        });
     }
 }

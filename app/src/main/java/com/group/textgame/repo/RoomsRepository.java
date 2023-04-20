@@ -14,6 +14,8 @@ public class RoomsRepository {
     private static RoomsRepository roomsRepo;
     private final RoomsDao roomsDao;
 
+    private final RoomsDatabase database;
+
     private Rooms activeRoom;
 
     public static RoomsRepository getInstance(Context context) {
@@ -24,11 +26,17 @@ public class RoomsRepository {
     }
 
     private RoomsRepository(Context context) {
-      RoomsDatabase database = Room.databaseBuilder(context, RoomsDatabase.class, "rooms.db")
+        database = Room.databaseBuilder(context, RoomsDatabase.class, "rooms.db")
+                .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
 
-        roomsDao = database.roomsDao();
+      roomsDao = database.roomsDao();
+    }
+
+    public void resetData(){
+        database.clearAllTables();
+        database.close();
     }
 
     public void setActiveRoom(Rooms room){
@@ -60,11 +68,12 @@ public class RoomsRepository {
         roomsDao.deleteRoom(room);
     }
 
-    public long getEnemy(long roomId) {
-        return roomsDao.getEnemy(roomId);
-    }
-
     public void updateRoom(Rooms room) {
         roomsDao.updateRoom(room);
+    }
+
+    public void hasEntered(boolean entered){
+        getActiveRoom().setEnteredBool(entered);
+        updateRoom(getActiveRoom());
     }
 }

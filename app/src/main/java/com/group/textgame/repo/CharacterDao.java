@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.*;
 import com.group.textgame.model.Player;
 import com.group.textgame.model.Enemy;
+import com.group.textgame.model.Rooms;
 
 import java.util.List;
 
@@ -15,6 +16,9 @@ public interface CharacterDao {
 
     @Query("SELECT * FROM Enemy WHERE id = :id")
     Enemy getEnemy(long id);
+
+    @Query("SELECT * FROM Enemy WHERE roomID = :roomID ORDER BY id COLLATE NOCASE")
+    Enemy getRoomEnemy(long roomID);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long addPlayer(Player player);

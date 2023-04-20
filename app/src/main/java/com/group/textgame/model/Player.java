@@ -11,7 +11,8 @@ import androidx.room.TypeConverters;
 @Entity
 public class Player extends Character {
 
-    public Player(String name) {
+    public Player(@NonNull long ID, String name) {
+        this.ID = ID;
         this.name = name;
     }
 
@@ -53,11 +54,11 @@ public class Player extends Character {
     }
 
     @Override
-    public void attackTarget(Player player) {}
+    public void attackTarget(Player player, int bonus) {}
 
     @Override
-    public void attackTarget(Enemy enemy) {
-        enemy.setHealth(enemy.getHealth() - getDamage());
+    public void attackTarget(Enemy enemy, int bonus) {
+        enemy.setHealth(enemy.getHealth() - (getDamage() + bonus));
     }
 }
 
