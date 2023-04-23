@@ -113,7 +113,7 @@ public class LevelOne {
 
         enemy.setHealth(100);
 
-        enemy.setDamage(100);
+        enemy.setDamage(5);
 
         characterRepo.addEnemy(enemy);
 

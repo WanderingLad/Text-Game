@@ -255,6 +255,7 @@ public class MainScreenFragment extends Fragment {
                                 currentText = Arrays.asList(getResources().getStringArray(R.array.room_array));
                                 actionText.setText(currentText.get(0));
                             }
+                            return;
                         case "Look":
                             addText(activeRoom.getLookText());
                             return;
