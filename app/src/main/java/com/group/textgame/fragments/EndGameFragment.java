@@ -24,6 +24,8 @@ public class EndGameFragment extends Fragment {
 
     private MainViewModel mainViewModel;
 
+    private TextView endGame;
+
     private Button quit;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,6 +41,14 @@ public class EndGameFragment extends Fragment {
                 getActivity().finish();
             }
         });
+
+        endGame = parentView.findViewById(R.id.end_game);
+
+        if(mainViewModel.getActiveRoom().getValue().isEndRoom()){
+            endGame.setText("You escaped The Brub!");
+        } else {
+            endGame.setText("You have died.");
+        }
 
         return parentView;
     }

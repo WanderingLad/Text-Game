@@ -60,9 +60,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop(){
-        super.onStop();
+    protected void onDestroy(){
+        super.onDestroy();
+        Log.d("Test", String.valueOf(mainViewModel.getRooms().size()));
         mainViewModel.resetData();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("Test1", String.valueOf(mainViewModel.getRooms().size()));
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("Test2", String.valueOf(mainViewModel.getRooms().size()));
+
     }
 
 

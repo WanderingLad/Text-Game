@@ -216,17 +216,21 @@ public class MainScreenFragment extends Fragment {
 
                     for(Object o : x){
                         if(o.getName().equals(actionText.getText())){
-                            addText(o.getObjectText());
-                        }
-                        if(o.getName().contains("Bread")){
-                            if(activePlayer.getHealth() < 100){
-                                addText("You eat the " + o.getName());
-                                activePlayer.setHealth(100);
-                                mainViewModel.setPlayerHealth();
-                                mainViewModel.changeParent(o, "Nothing");
-                                currentInventory = mainViewModel.getInventory();
+                            if(o.getName().contains("Bread")){
+                                if(activePlayer.getHealth() < 100){
+                                    addText("You eat the " + o.getName());
+                                    activePlayer.setHealth(100);
+                                    mainViewModel.setPlayerHealth();
+                                    mainViewModel.changeParent(o, "Nothing");
+                                    currentInventory = mainViewModel.getInventory();
+                                } else {
+                                    addText(o.getObjectText());
+                                }
+                            } else {
+                                addText(o.getObjectText());
                             }
                         }
+
                     }
 
                     currentText = Arrays.asList(getResources().getStringArray(R.array.main_array));
@@ -238,8 +242,14 @@ public class MainScreenFragment extends Fragment {
 
                     switch(actionText.getText().toString()){
                         case "Move":
-                            if(activeEnemy != null && activeEnemy.getHealth() != 0){
-                                addText("There's no way out but fighting");
+                            if(activeEnemy != null){
+                                if(activeEnemy.getHealth() > 0){
+                                    addText("There's no way out but fighting");
+                                } else {
+                                    previousText = currentText;
+                                    currentText = Arrays.asList(getResources().getStringArray(R.array.room_array));
+                                    actionText.setText(currentText.get(0));
+                                }
                             } else {
                                 previousText = currentText;
                                 currentText = Arrays.asList(getResources().getStringArray(R.array.room_array));
@@ -529,7 +539,7 @@ public class MainScreenFragment extends Fragment {
     }
 
     public void attackPlayer(View view){
-        if(activePlayer.getHealth() >= activeEnemy.getDamage()){
+        if(activePlayer.getHealth() > activeEnemy.getDamage()){
             if(currentInventory.contains("Shield")){
                 activeEnemy.attackTarget(activePlayer, -2);
             } else {
