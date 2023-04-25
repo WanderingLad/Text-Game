@@ -338,6 +338,12 @@ public class LevelOne {
 
         characterRepo.addEnemy(enemy);
 
+        object = new Object(30, "Husk", activeRoom.getRoomName(), "It looks like you weren't the only one to make this far, but maybe the only one to live to see the next room.");
+        objectRepo.addObject(object);
+
+        object = new Object(31, "Large Sword", activeRoom.getRoomName(), "This sword is impressively big. Too large for you to handle. Now that you think of it, the knight's armor was missing something.");
+        objectRepo.addObject(object);
+
         roomsRepo.updateRoom(activeRoom);
 
         //Room End
